@@ -14,7 +14,7 @@
 #include "CS3113/cs3113.h"
 
 // Global Constants
-constexpr int SCREEN_WIDTH = 1000, SCREEN_HEIGHT = 600, FPS = 120, NUMBER_OF_LEVELS = 6;
+constexpr int SCREEN_WIDTH = 800, SCREEN_HEIGHT = 1000, FPS = 120, NUMBER_OF_LEVELS = 6;
 
 constexpr Vector2 ORIGIN = {SCREEN_WIDTH / 2.0, SCREEN_HEIGHT / 2.0};
 
