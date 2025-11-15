@@ -14,7 +14,7 @@ void LevelA::initialise() {
 
     mGameState.bgm = LoadMusicStream("assets/game/04 - Silent Forest.wav");
     SetMusicVolume(mGameState.bgm, 0.33f);
-    // PlayMusicStream(gState.bgm);
+    PlayMusicStream(mGameState.bgm);
 
     /*
        ----------- MAP -----------
