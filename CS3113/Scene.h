@@ -7,6 +7,7 @@
 struct GameState {
     Entity* player;
     Map* map;
+    Music bgm;
 
     std::vector<Enemy*> enemies;
     Camera2D camera;
