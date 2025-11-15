@@ -10,6 +10,7 @@ LevelA::~LevelA() {
 }
 
 void LevelA::initialise() {
+    printf("joever\n");
     mGameState.nextSceneID = 0;
 
     mGameState.bgm = LoadMusicStream("");

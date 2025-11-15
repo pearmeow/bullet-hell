@@ -25,7 +25,9 @@ constexpr float FIXED_TIMESTEP = 1.0f / 60.0f;
 AppStatus gAppStatus = RUNNING;
 float gPreviousTicks = 0.0f, gTimeAccumulator = 0.0f;
 
+std::vector<Scene*> gLevels;
 Scene* gCurrentScene;
+LevelA* gLevelA;
 
 // Function Declarations
 void switchToScene(Scene* scene);
@@ -43,7 +45,10 @@ void switchToScene(Scene* scene) {
 void initialise() {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Scenes");
     InitAudioDevice();
-    gCurrentScene = new LevelA;
+    gLevelA = new LevelA(ORIGIN, "#000000");
+    gLevels.push_back(gLevelA);
+
+    switchToScene(gLevels[0]);
 
     SetTargetFPS(FPS);
 }
@@ -77,7 +82,7 @@ void update() {
     }
 
     while (deltaTime >= FIXED_TIMESTEP) {
-        // gCurrentScene->update(FIXED_TIMESTEP);
+        gCurrentScene->update(FIXED_TIMESTEP);
         deltaTime -= FIXED_TIMESTEP;
     }
 }
