@@ -75,18 +75,18 @@ void update() {
     }
 
     while (deltaTime >= FIXED_TIMESTEP) {
-        gCurrentScene->update(FIXED_TIMESTEP);
+        // gCurrentScene->update(FIXED_TIMESTEP);
         deltaTime -= FIXED_TIMESTEP;
     }
 }
 
 void render() {
     BeginDrawing();
-    BeginMode2D(gCurrentScene->getState().camera);
+    // BeginMode2D(gCurrentScene->getState().camera);
 
-    gCurrentScene->render();
+    // gCurrentScene->render();
 
-    EndMode2D();
+    // EndMode2D();
     EndDrawing();
 }
 
@@ -102,9 +102,9 @@ int main() {
         processInput();
         update();
 
-        if (gCurrentScene->getState().nextSceneID > 0) {
-            // switchToScene(gLevels[gSceneIndex]);
-        }
+        // if (gCurrentScene->getState().nextSceneID > 0) {
+        // switchToScene(gLevels[gSceneIndex]);
+        // }
 
         render();
     }
