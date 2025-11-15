@@ -38,7 +38,7 @@ void LevelB::initialise() {
     float sizeRatio = 48.0f / 64.0f;
 
     // Assets from @see https://sscary.itch.io/the-adventurer-female
-    mGameState.player = new Entity({mOrigin.x - 300.0f, mOrigin.y - 200.0f},  // position
+    mGameState.player = new Player({mOrigin.x - 300.0f, mOrigin.y - 200.0f},  // position
                                    {250.0f * sizeRatio, 250.0f},              // scale
                                    "assets/game/walk.png",                    // texture file address
                                    ATLAS,                                     // single image or atlas?

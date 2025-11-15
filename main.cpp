@@ -10,6 +10,7 @@
 
 #include <raylib.h>
 
+#include "CS3113/LevelA.h"
 #include "CS3113/Scene.h"
 #include "CS3113/cs3113.h"
 
@@ -42,6 +43,7 @@ void switchToScene(Scene* scene) {
 void initialise() {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Scenes");
     InitAudioDevice();
+    gCurrentScene = new LevelA;
 
     SetTargetFPS(FPS);
 }
@@ -82,11 +84,11 @@ void update() {
 
 void render() {
     BeginDrawing();
-    // BeginMode2D(gCurrentScene->getState().camera);
+    BeginMode2D(gCurrentScene->getState().camera);
 
-    // gCurrentScene->render();
+    gCurrentScene->render();
 
-    // EndMode2D();
+    EndMode2D();
     EndDrawing();
 }
 

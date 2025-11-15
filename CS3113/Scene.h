@@ -1,11 +1,11 @@
 #include "Enemy.h"
-#include "Entity.h"
+#include "Player.h"
 
 #ifndef SCENE_H
 #define SCENE_H
 
 struct GameState {
-    Entity* player;
+    Player* player;
     Map* map;
     Music bgm;
 
