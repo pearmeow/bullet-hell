@@ -50,10 +50,14 @@ protected:
 
     bool isColliding(Entity* other) const;
 
+    // Overload for vectors + use move semantics for better perfomance maybe??
+    void checkCollisionY(std::vector<Entity*>&& entities);
     void checkCollisionY(Entity* collidableEntities, int collisionCheckCount);
     void checkCollisionY(Map* map);
 
+    // Overload for vectors + use move semantics for better perfomance maybe??
     void checkCollisionX(Entity* collidableEntities, int collisionCheckCount);
+    void checkCollisionX(std::vector<Entity*>&& entities);
     void checkCollisionX(Map* map);
 
     void resetColliderFlags() {
@@ -79,7 +83,7 @@ public:
     Entity(Vector2 position, Vector2 scale, const char* textureFilepath, TextureType textureType,
            Vector2 spriteSheetDimensions, std::map<Direction, std::vector<int>> animationAtlas,
            EntityType entityType);
-    ~Entity();
+    virtual ~Entity();
 
     virtual void update(float deltaTime, Entity* player, Map* map, Entity* collidableEntities,
                         int collisionCheckCount);

@@ -76,11 +76,10 @@ void LevelA::initialise() {
 void LevelA::update(float deltaTime) {
     UpdateMusicStream(mGameState.bgm);
 
-    mGameState.player->update(deltaTime,       // delta time / fixed timestep
-                              nullptr,         // player
-                              mGameState.map,  // map
-                              nullptr,         // collidable entities
-                              0                // col. entity count
+    mGameState.player->update(deltaTime,          // delta time / fixed timestep
+                              nullptr,            // player
+                              mGameState.map,     // map
+                              mGameState.enemies  // enemies (vector)
     );
 
     for (Enemy* enemy : mGameState.enemies) {

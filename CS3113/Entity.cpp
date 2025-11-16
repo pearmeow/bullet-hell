@@ -61,6 +61,68 @@ Entity::~Entity() {
     UnloadTexture(mTexture);
 };
 
+void Entity::checkCollisionY(std::vector<Entity*>&& entities) {
+    for (Entity* collidableEntity : entities) {
+        if (isColliding(collidableEntity)) {
+            // STEP 2: Calculate the distance between its centre and our centre
+            //         and use that to calculate the amount of overlap between
+            //         both bodies.
+            float yDistance = fabs(mPosition.y - collidableEntity->mPosition.y);
+            float yOverlap = fabs(yDistance - (mColliderDimensions.y / 2.0f) -
+                                  (collidableEntity->mColliderDimensions.y / 2.0f));
+
+            // STEP 3: "Unclip" ourselves from the other entity, and zero our
+            //         vertical velocity.
+            if (mVelocity.y > 0) {
+                mPosition.y -= yOverlap;
+                mVelocity.y = 0;
+                mIsCollidingBottom = true;
+            } else if (mVelocity.y < 0) {
+                mPosition.y += yOverlap;
+                mVelocity.y = 0;
+                mIsCollidingTop = true;
+
+                if (collidableEntity->mEntityType == BLOCK) collidableEntity->deactivate();
+            }
+        }
+    }
+}
+
+void Entity::checkCollisionX(std::vector<Entity*>&& entities) {
+    for (Entity* collidableEntity : entities) {
+        if (isColliding(collidableEntity)) {
+            // When standing on a platform, we're always slightly overlapping
+            // it vertically due to gravity, which causes false horizontal
+            // collision detections. So the solution I found is only resolve X
+            // collisions if there's significant Y overlap, preventing the
+            // platform we're standing on from acting like a wall.
+            float yDistance = fabs(mPosition.y - collidableEntity->mPosition.y);
+            float yOverlap = fabs(yDistance - (mColliderDimensions.y / 2.0f) -
+                                  (collidableEntity->mColliderDimensions.y / 2.0f));
+
+            // Skip if barely touching vertically (standing on platform)
+            if (yOverlap < Y_COLLISION_THRESHOLD) continue;
+
+            float xDistance = fabs(mPosition.x - collidableEntity->mPosition.x);
+            float xOverlap = fabs(xDistance - (mColliderDimensions.x / 2.0f) -
+                                  (collidableEntity->mColliderDimensions.x / 2.0f));
+
+            if (mVelocity.x > 0) {
+                mPosition.x -= xOverlap;
+                mVelocity.x = 0;
+
+                // Collision!
+                mIsCollidingRight = true;
+            } else if (mVelocity.x < 0) {
+                mPosition.x += xOverlap;
+                mVelocity.x = 0;
+
+                // Collision!
+                mIsCollidingLeft = true;
+            }
+        }
+    }
+}
 void Entity::checkCollisionY(Entity* collidableEntities, int collisionCheckCount) {
     for (int i = 0; i < collisionCheckCount; i++) {
         // STEP 1: For every entity that our player can collide with...

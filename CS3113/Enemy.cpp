@@ -32,4 +32,18 @@ void Enemy::update(float deltaTime, Entity* player, Map* map, Entity* collidable
 
     if (mTextureType == ATLAS) animate(deltaTime);
     resetMovement();
+    for (Bullet* bullet : mBullets) {
+        bullet->update(deltaTime, nullptr, nullptr, nullptr, 0);
+    }
+}
+
+void Enemy::render() {
+    Entity::render();
+    for (Bullet* bullet : mBullets) {
+        bullet->render();
+    }
+}
+
+std::list<Bullet*>& Enemy::getBullets() {
+    return mBullets;
 }
