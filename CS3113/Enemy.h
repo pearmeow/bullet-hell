@@ -11,7 +11,9 @@ class Enemy : public Entity {
 private:
     std::list<Bullet*> mBullets;
     std::queue<Bullet*> mInactiveBullets;
-    float mNextAttack = 0.0f;
+    float mAttackDelay = 0.0f;
+    float mAttackSpeed = 1.0f;
+    int mAttacks = 1;
 
 public:
     Enemy(Vector2 position, Vector2 scale, const char* textureFile, TextureType textureType,
