@@ -20,14 +20,13 @@ void LevelA::initialise() {
     /*
        ----------- MAP -----------
     */
-    mGameState.map = nullptr;
-    // mGameState.map = new Map(LEVEL_WIDTH, LEVEL_HEIGHT,  // map grid cols & rows
-    //                          (unsigned int*)mLevelData,  // grid data
-    //                          "",                         // texture filepath
-    //                          TILE_DIMENSION,             // tile size
-    //                          4, 1,                       // texture cols & rows
-    //                          mOrigin                     // in-game origin
-    // );
+    mGameState.map = new Map(LEVEL_WIDTH, LEVEL_HEIGHT,  // map grid cols & rows
+                             (unsigned int*)mLevelData,  // grid data
+                             "./assets/bounds.png",      // texture filepath
+                             TILE_DIMENSION,             // tile size
+                             1, 1,                       // texture cols & rows
+                             mOrigin                     // in-game origin
+    );
 
     /*
        ----------- PROTAGONIST -----------
@@ -72,10 +71,6 @@ void LevelA::update(float deltaTime) {
                               nullptr,         // collidable entities
                               0                // col. entity count
     );
-
-    Vector2 currentPlayerPosition = {mGameState.player->getPosition().x, mOrigin.y};
-
-    if (mGameState.player->getPosition().y > 800.0f) mGameState.nextSceneID = 1;
 }
 
 void LevelA::render() {
