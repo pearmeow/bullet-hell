@@ -52,6 +52,17 @@ void LevelA::initialise() {
     mGameState.player->setColliderDimensions({25.0f, 25.0f});
     mGameState.player->setFrameSpeed(6.0f);
 
+    mGameState.enemies.clear();
+    mGameState.enemies.push_back(new Enemy({mOrigin.x, mOrigin.y - 400.0f},            // position
+                                                                                       //
+                                           {50.0f, 50.0f},                             // scale
+                                           "./assets/tiny-spaceships/tinyShip16.png",  // texture file address
+                                           ATLAS,                                      // single image or atlas?
+                                           {3, 4},                                     // atlas dimensions
+                                           playerAnimationAtlas,                       // actual atlas
+                                           PLAYER                                      // entity type));
+                                           ));
+
     /*
        ----------- CAMERA -----------
     */
@@ -71,14 +82,18 @@ void LevelA::update(float deltaTime) {
                               nullptr,         // collidable entities
                               0                // col. entity count
     );
+
+    for (Enemy* enemy : mGameState.enemies) {
+        enemy->update(deltaTime, nullptr, nullptr, nullptr, 0);
+    }
 }
 
 void LevelA::render() {
     ClearBackground(ColorFromHex(mBGColourHexCode));
 
     mGameState.player->render();
-    if (mGameState.map) {
-        mGameState.map->render();
+    for (Enemy* enemy : mGameState.enemies) {
+        enemy->render();
     }
 }
 
