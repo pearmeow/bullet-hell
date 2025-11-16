@@ -39,14 +39,12 @@ void LevelA::initialise() {
         {RIGHT, {6, 7, 8}},
     };
 
-    float sizeRatio = 48.0f / 64.0f;
-
     mGameState.player = new Player({mOrigin.x - 300.0f, mOrigin.y - 200.0f},   // position
                                                                                //
-                                   {250.0f * sizeRatio, 250.0f},               // scale
+                                   {50.0f, 50.0f},                             // scale
                                    "./assets/tiny-spaceships/tinyShip16.png",  // texture file address
                                    ATLAS,                                      // single image or atlas?
-                                   {4, 3},                                     // atlas dimensions
+                                   {3, 4},                                     // atlas dimensions
                                    playerAnimationAtlas,                       // actual atlas
                                    PLAYER                                      // entity type
     );
