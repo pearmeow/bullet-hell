@@ -1,7 +1,7 @@
 /**
  * Author: Perry Huang
- * Assignment: Rise of the AI
- * Date due: 2025-11-08, 11:59pm
+ * Assignment: Bullet Hell
+ * Date due: December 5th, 2:00pm
  * I pledge that I have completed this assignment without
  * collaborating with anyone else, in conformance with the
  * NYU School of Engineering Policies and Procedures on
