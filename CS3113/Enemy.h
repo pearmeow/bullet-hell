@@ -1,12 +1,15 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
+#include <queue>
+
 #include "Bullet.h"
 #include "Entity.h"
 
 class Enemy : public Entity {
 private:
     std::vector<Bullet*> mBullets;
+    std::queue<Bullet*> mInactiveBullets;
 
 public:
     Enemy(Vector2 position, Vector2 scale, const char* textureFile, TextureType textureType,
