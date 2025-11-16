@@ -55,12 +55,16 @@ void initialise() {
 
 void processInput() {
     if (IsKeyDown(KEY_A)) {
+        gCurrentScene->getState().player->moveLeft();
     }
     if (IsKeyDown(KEY_D)) {
+        gCurrentScene->getState().player->moveRight();
     }
-    if (IsKeyPressed(KEY_W)) {
+    if (IsKeyDown(KEY_W)) {
+        gCurrentScene->getState().player->moveUp();
     }
-    if (IsKeyPressed(KEY_S)) {
+    if (IsKeyDown(KEY_S)) {
+        gCurrentScene->getState().player->moveDown();
     }
 
     if (IsKeyPressed(KEY_ENTER)) {

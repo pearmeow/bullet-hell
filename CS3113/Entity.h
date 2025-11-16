@@ -3,7 +3,7 @@
 
 #include "Map.h"
 
-enum Direction { LEFT, UP, RIGHT, DOWN };  // For walking
+enum Direction { LEFT, UP, RIGHT, DOWN, STILL };  // For walking
 enum EntityStatus { ACTIVE, INACTIVE };
 enum EntityType { PLAYER, BLOCK, PLATFORM, NPC, EMPTY };
 enum AIType { WANDERER, FOLLOWER };
@@ -122,6 +122,7 @@ public:
 
     void resetMovement() {
         mMovement = {0.0f, 0.0f};
+        mDirection = STILL;
     }
 
     Vector2 getPosition() const {

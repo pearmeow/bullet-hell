@@ -14,6 +14,10 @@ void Player::update(float deltaTime, Entity* player, Map* map, Entity* collidabl
     if (mEntityStatus == INACTIVE) {
         return;
     }
+    if (GetLength(mMovement) > 1) {
+        normaliseMovement();
+    }
+    resetColliderFlags();
     mVelocity.x = mMovement.x * mSpeed;
     mVelocity.y = mMovement.y * mSpeed;
 
@@ -25,5 +29,6 @@ void Player::update(float deltaTime, Entity* player, Map* map, Entity* collidabl
     checkCollisionX(collidableEntities, collisionCheckCount);
     checkCollisionX(map);
 
-    if (mTextureType == ATLAS && GetLength(mMovement) != 0) animate(deltaTime);
+    if (mTextureType == ATLAS) animate(deltaTime);
+    resetMovement();
 }

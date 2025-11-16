@@ -33,13 +33,10 @@ void LevelA::initialise() {
        ----------- PROTAGONIST -----------
     */
     std::map<Direction, std::vector<int>> playerAnimationAtlas = {
-        {DOWN, {6, 7, 8}},
-        {LEFT, {6, 7, 8}},
-        {UP, {6, 7, 8}},
-        {RIGHT, {6, 7, 8}},
+        {DOWN, {5, 6, 7}}, {LEFT, {5, 6, 7}}, {UP, {5, 6, 7}}, {RIGHT, {5, 6, 7}}, {STILL, {4, 4, 4}},
     };
 
-    mGameState.player = new Player({mOrigin.x - 300.0f, mOrigin.y - 200.0f},   // position
+    mGameState.player = new Player({mOrigin.x, mOrigin.y + 400.0f},            // position
                                                                                //
                                    {50.0f, 50.0f},                             // scale
                                    "./assets/tiny-spaceships/tinyShip16.png",  // texture file address
@@ -52,15 +49,18 @@ void LevelA::initialise() {
     // mGameState.player->setColliderDimensions(
     //     {mGameState.player->getScale().x / 3.5f, mGameState.player->getScale().y / 3.0f});
     mGameState.player->setAcceleration({0.0f, 0.0f});
+    mGameState.player->setSpeed(200.0f);
+    mGameState.player->setColliderDimensions({25.0f, 25.0f});
+    mGameState.player->setFrameSpeed(6.0f);
 
     /*
        ----------- CAMERA -----------
     */
-    mGameState.camera = {0};                                      // zero initialize
-    mGameState.camera.target = mGameState.player->getPosition();  // camera follows player
-    mGameState.camera.offset = mOrigin;                           // camera offset to center of screen
-    mGameState.camera.rotation = 0.0f;                            // no rotation
-    mGameState.camera.zoom = 1.0f;                                // default zoom
+    mGameState.camera = {0};             // zero initialize
+    mGameState.camera.target = mOrigin;  // camera follows origin
+    mGameState.camera.offset = mOrigin;  // camera offset to center of screen
+    mGameState.camera.rotation = 0.0f;   // no rotation
+    mGameState.camera.zoom = 1.0f;       // default zoom
 }
 
 void LevelA::update(float deltaTime) {
@@ -76,8 +76,6 @@ void LevelA::update(float deltaTime) {
     Vector2 currentPlayerPosition = {mGameState.player->getPosition().x, mOrigin.y};
 
     if (mGameState.player->getPosition().y > 800.0f) mGameState.nextSceneID = 1;
-
-    panCamera(&mGameState.camera, &currentPlayerPosition);
 }
 
 void LevelA::render() {
