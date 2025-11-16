@@ -4,11 +4,8 @@ Vector2 defaultPattern(float elapsedTime, Vector2 currVelocity) {
     return {0.0f, 5.0f};
 }
 
-Bullet::Bullet(Vector2 position, Vector2 scale, const char* textureFile, TextureType textureType,
-               Vector2 spriteSheetDimensions, std::map<Direction, std::vector<int>> animationAtlas,
-               EntityType entityType)
-    : Entity(position, scale, textureFile, textureType, spriteSheetDimensions, animationAtlas, entityType),
-      mPattern(defaultPattern) {
+Bullet::Bullet(Vector2 position, Vector2 scale, const char* textureFile, EntityType entityType)
+    : Entity(position, scale, textureFile, entityType), mPattern(defaultPattern) {
 }
 
 Bullet::Bullet(Vector2 position, Vector2 scale, const char* textureFile, TextureType textureType,

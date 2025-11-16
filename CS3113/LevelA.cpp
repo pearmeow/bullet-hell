@@ -54,14 +54,23 @@ void LevelA::initialise() {
 
     mGameState.enemies.clear();
     mGameState.enemies.push_back(new Enemy({mOrigin.x, mOrigin.y - 400.0f},            // position
-                                                                                       //
                                            {50.0f, 50.0f},                             // scale
                                            "./assets/tiny-spaceships/tinyShip16.png",  // texture file address
                                            ATLAS,                                      // single image or atlas?
                                            {3, 4},                                     // atlas dimensions
                                            playerAnimationAtlas,                       // actual atlas
-                                           PLAYER                                      // entity type));
+                                           NPC                                         // entity type));
                                            ));
+
+    for (Enemy* enemy : mGameState.enemies) {
+        for (int i = 0; i < 400; ++i) {
+            enemy->addBullet(new Bullet({mOrigin.x, mOrigin.y - 450.0f},  // position
+                                        {50.0f, 50.0f},                   // scale
+                                        "./assets/bullet.png",            // texture file address
+                                        NPC                               // entity type))
+                                        ));
+        }
+    }
 
     /*
        ----------- CAMERA -----------

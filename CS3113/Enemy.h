@@ -23,6 +23,7 @@ public:
                 int collisionCheckCount) override;
     void render();
     std::list<Bullet*>& getBullets();
+    void addBullet(Bullet* bullet);
 };
 
 #endif

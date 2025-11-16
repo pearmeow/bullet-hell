@@ -72,6 +72,10 @@ std::list<Bullet*>& Enemy::getBullets() {
     return mBullets;
 }
 
+void Enemy::addBullet(Bullet* bullet) {
+    mInactiveBullets.push(bullet);
+}
+
 Vector2 straightPattern(float elapsedTime, Vector2 currVelocity) {
     if (elapsedTime >= 10.0f) {
         return {0.0f, 30.0f};

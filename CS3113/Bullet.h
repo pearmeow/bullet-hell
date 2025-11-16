@@ -11,9 +11,7 @@ private:
 
 public:
     // default pattern
-    Bullet(Vector2 position, Vector2 scale, const char* textureFile, TextureType textureType,
-           Vector2 spriteSheetDimensions, std::map<Direction, std::vector<int>> animationAtlas,
-           EntityType entityType);
+    Bullet(Vector2 position, Vector2 scale, const char* textureFile, EntityType entityType);
     // provid a pattern
     Bullet(Vector2 position, Vector2 scale, const char* textureFile, TextureType textureType,
            Vector2 spriteSheetDimensions, std::map<Direction, std::vector<int>> animationAtlas,
