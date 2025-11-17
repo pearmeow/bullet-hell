@@ -1,7 +1,7 @@
 #include "Bullet.h"
 
-Vector2 defaultPattern(float elapsedTime, Vector2 currVelocity) {
-    return {0.0f, 5.0f};
+float defaultPattern(float elapsedTime) {
+    return 5.0f;
 }
 
 Bullet::Bullet(Vector2 position, Vector2 scale, const char* textureFile, EntityType entityType)
@@ -10,7 +10,7 @@ Bullet::Bullet(Vector2 position, Vector2 scale, const char* textureFile, EntityT
 
 Bullet::Bullet(Vector2 position, Vector2 scale, const char* textureFile, TextureType textureType,
                Vector2 spriteSheetDimensions, std::map<Direction, std::vector<int>> animationAtlas,
-               EntityType entityType, Vector2 (*pattern)(float elapsedTime, Vector2 currVelocity))
+               EntityType entityType, float (*pattern)(float))
     : Entity(position, scale, textureFile, textureType, spriteSheetDimensions, animationAtlas, entityType),
       mPattern(pattern) {
 }
@@ -21,14 +21,14 @@ void Bullet::update(float deltaTime, Entity* player, Map* map, Entity* collidabl
         return;
     }
     mElapsedTime += deltaTime;
-    mVelocity = mPattern(mElapsedTime, mVelocity);
-    mPosition.y += std::cos(mAngle * (3.1415f / 180.0f)) * mVelocity.y * deltaTime;
-    mPosition.x += std::sin(mAngle * (3.1415f / 180.0f)) * mVelocity.x * deltaTime;
+    mSpeed = mPattern(mElapsedTime);
+    mPosition.y += std::cos(mAngle * (3.1415f / 180.0f)) * mSpeed * deltaTime;
+    mPosition.x += std::sin(mAngle * (3.1415f / 180.0f)) * mSpeed * deltaTime;
     if (mElapsedTime >= mTimeAlive) {
         deactivate();
     }
 }
 
-void Bullet::setPattern(Vector2 (*newPattern)(float deltaTime, Vector2 currVelocity)) {
+void Bullet::setPattern(float (*newPattern)(float elapsedTime)) {
     mPattern = newPattern;
 }

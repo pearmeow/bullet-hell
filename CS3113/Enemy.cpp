@@ -3,7 +3,7 @@
 #include "Entity.h"
 #include "cs3113.h"
 
-Vector2 straightPattern(float deltaTime, Vector2 currVelocity);
+float straightPattern(float deltaTime);
 
 Enemy::Enemy(Vector2 position, Vector2 scale, const char* textureFile, TextureType textureType,
              Vector2 spriteSheetDimensions, std::map<Direction, std::vector<int>> animationAtlas,
@@ -48,13 +48,12 @@ void Enemy::update(float deltaTime, Entity* player, Map* map, Entity* collidable
     mAttackDelay += deltaTime;
     if (mAttackDelay >= mAttackSpeed) {
         mAttackDelay = 0.0f;
-        float rotation = 30.0f;
+        float rotation = 0.0f;
         for (int count = 0; count < mAttacks; ++count) {
             Bullet* nextBullet = mInactiveBullets.front();
             nextBullet->setPosition({mPosition.x, mPosition.y + mScale.y + 5.0f});
             nextBullet->setAngle(rotation);
             nextBullet->setPattern(straightPattern);
-            rotation -= 10.0f;
             mBullets.push_back(nextBullet);
             mInactiveBullets.pop();
         }
@@ -76,10 +75,10 @@ void Enemy::addBullet(Bullet* bullet) {
     mInactiveBullets.push(bullet);
 }
 
-Vector2 straightPattern(float elapsedTime, Vector2 currVelocity) {
-    if (elapsedTime >= 10.0f) {
-        return {0.0f, 30.0f};
+float straightPattern(float elapsedTime) {
+    if (elapsedTime >= 3.0f) {
+        return 30.0f;
     } else {
-        return {0.0f, 10.0f};
+        return 10.0f;
     }
 }

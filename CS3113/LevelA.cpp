@@ -32,7 +32,14 @@ void LevelA::initialise() {
        ----------- PROTAGONIST -----------
     */
     std::map<Direction, std::vector<int>> playerAnimationAtlas = {
-        {DOWN, {5, 6, 7}}, {LEFT, {5, 6, 7}}, {UP, {5, 6, 7}}, {RIGHT, {5, 6, 7}}, {STILL, {4, 4, 4}},
+        {DOWN, {5, 6, 7}},
+        {LEFT, {5, 6, 7}},
+        {UP, {5, 6, 7}},
+        {RIGHT, {5, 6, 7}},
+        {
+            STILL,
+            {4, 4, 4},
+        },
     };
 
     mGameState.player = new Player({mOrigin.x, mOrigin.y + 400.0f},            // position
@@ -64,11 +71,14 @@ void LevelA::initialise() {
 
     for (Enemy* enemy : mGameState.enemies) {
         for (int i = 0; i < 400; ++i) {
-            enemy->addBullet(new Bullet({mOrigin.x, mOrigin.y - 450.0f},  // position
-                                        {50.0f, 50.0f},                   // scale
-                                        "./assets/bullet.png",            // texture file address
-                                        NPC                               // entity type))
-                                        ));
+            Bullet* newBullet = new Bullet({mOrigin.x, mOrigin.y - 450.0f},  // position
+                                           {50.0f, 50.0f},                   // scale
+                                           "./assets/bullet.png",            // texture file address
+                                           NPC                               // entity type)
+            );
+            newBullet->setColliderDimensions(
+                {newBullet->getColliderDimensions().x - 10.0f, newBullet->getColliderDimensions().y - 10.0f});
+            enemy->addBullet(newBullet);
         }
     }
 

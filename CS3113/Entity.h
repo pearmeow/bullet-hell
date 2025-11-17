@@ -3,7 +3,7 @@
 
 #include "Map.h"
 
-enum Direction { LEFT, UP, RIGHT, DOWN, STILL };  // For walking
+enum Direction { LEFT, UP, RIGHT, DOWN, STILL, INVINCIBLE };  // For walking
 enum EntityStatus { ACTIVE, INACTIVE };
 enum EntityType { PLAYER, BLOCK, PLATFORM, NPC, EMPTY };
 enum AIType { WANDERER, FOLLOWER };
