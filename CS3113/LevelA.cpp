@@ -135,6 +135,9 @@ void LevelA::render() {
 
 void LevelA::shutdown() {
     delete mGameState.player;
+    for (Enemy* enemy : mGameState.enemies) {
+        delete enemy;
+    }
 
     UnloadMusicStream(mGameState.bgm);
 }

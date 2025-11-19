@@ -12,7 +12,7 @@ private:
     std::list<Bullet*> mBullets;
     std::queue<Bullet*> mInactiveBullets;
     float mAttackDelay = 0.0f;
-    float mAttackSpeed = 1.0f;
+    float mAttackSpeed = 2.0f;
     int mAttacks = 1;
 
 public:

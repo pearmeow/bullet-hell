@@ -90,6 +90,11 @@ void Enemy::addBullet(Bullet* bullet) {
 
 float straightPattern(float elapsedTime, float& angle) {
     if (elapsedTime >= 1.0f) {
+        if (std::sin(3.14 * elapsedTime * 48 / 180.0f) > 0) {
+            angle += 0.5f;
+        } else {
+            angle -= 0.5f;
+        }
         return 30.0f;
     } else {
         return 10.0f;
