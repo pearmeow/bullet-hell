@@ -19,6 +19,7 @@ public:
     Enemy(Vector2 position, Vector2 scale, const char* textureFile, TextureType textureType,
           Vector2 spriteSheetDimensions, std::map<Direction, std::vector<int>> animationAtlas,
           EntityType entityType);
+    ~Enemy();
     void update(float deltaTime, Entity* player, Map* map, Entity* collidableEntities,
                 int collisionCheckCount) override;
     void render();

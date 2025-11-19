@@ -12,6 +12,17 @@ Enemy::Enemy(Vector2 position, Vector2 scale, const char* textureFile, TextureTy
     mAngle = 180.0f;
 }
 
+Enemy::~Enemy() {
+    while (!mInactiveBullets.empty()) {
+        mBullets.push_back(mInactiveBullets.front());
+        mInactiveBullets.pop();
+    }
+    for (Bullet* activeBullet : mBullets) {
+        delete activeBullet;
+    }
+    mBullets.clear();
+}
+
 void Enemy::update(float deltaTime, Entity* player, Map* map, Entity* collidableEntities,
                    int collisionCheckCount) {
     if (mEntityStatus == INACTIVE) {
