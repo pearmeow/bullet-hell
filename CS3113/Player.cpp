@@ -42,6 +42,8 @@ void Player::update(float deltaTime, Entity* player, Map* map, std::vector<Enemy
     mIframes -= deltaTime;
     if (mIframes < 0.0f) {
         mIframes = 0.0f;
+    } else {
+        mDirection = INVINCIBLE;
     }
 
     if (mTextureType == ATLAS) animate(deltaTime);

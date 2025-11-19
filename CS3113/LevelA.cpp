@@ -1,5 +1,7 @@
 #include "LevelA.h"
 
+#include "Entity.h"
+
 LevelA::LevelA() : Scene{{0.0f}, nullptr} {
 }
 LevelA::LevelA(Vector2 origin, const char* bgHexCode) : Scene{origin, bgHexCode} {
@@ -31,16 +33,18 @@ void LevelA::initialise() {
     /*
        ----------- PROTAGONIST -----------
     */
-    std::map<Direction, std::vector<int>> playerAnimationAtlas = {
-        {DOWN, {5, 6, 7}},
-        {LEFT, {5, 6, 7}},
-        {UP, {5, 6, 7}},
-        {RIGHT, {5, 6, 7}},
-        {
-            STILL,
-            {4, 4, 4},
-        },
-    };
+    std::map<Direction, std::vector<int>> playerAnimationAtlas = {{DOWN, {5, 6, 7}},
+                                                                  {LEFT, {5, 6, 7}},
+                                                                  {UP, {5, 6, 7}},
+                                                                  {RIGHT, {5, 6, 7}},
+                                                                  {
+                                                                      STILL,
+                                                                      {4, 4, 4},
+                                                                  },
+                                                                  {
+                                                                      INVINCIBLE,
+                                                                      {6, 7, 2},
+                                                                  }};
 
     mGameState.player = new Player({mOrigin.x, mOrigin.y + 400.0f},            // position
                                                                                //
@@ -51,6 +55,20 @@ void LevelA::initialise() {
                                    playerAnimationAtlas,                       // actual atlas
                                    PLAYER                                      // entity type
     );
+
+    /*
+       ----------- PROTAGONIST -----------
+    */
+    std::map<Direction, std::vector<int>> enemyAnimationAtlas = {
+        {DOWN, {5, 6, 7}},
+        {LEFT, {5, 6, 7}},
+        {UP, {5, 6, 7}},
+        {RIGHT, {5, 6, 7}},
+        {
+            STILL,
+            {4, 4, 4},
+        },
+    };
 
     // mGameState.player->setColliderDimensions(
     //     {mGameState.player->getScale().x / 3.5f, mGameState.player->getScale().y / 3.0f});
@@ -65,7 +83,7 @@ void LevelA::initialise() {
                                            "./assets/tiny-spaceships/tinyShip16.png",  // texture file address
                                            ATLAS,                                      // single image or atlas?
                                            {3, 4},                                     // atlas dimensions
-                                           playerAnimationAtlas,                       // actual atlas
+                                           enemyAnimationAtlas,                        // actual atlas
                                            NPC                                         // entity type));
                                            ));
 
