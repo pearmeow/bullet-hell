@@ -73,8 +73,8 @@ void LevelA::initialise() {
     // mGameState.player->setColliderDimensions(
     //     {mGameState.player->getScale().x / 3.5f, mGameState.player->getScale().y / 3.0f});
     mGameState.player->setAcceleration({0.0f, 0.0f});
-    mGameState.player->setSpeed(200.0f);
-    mGameState.player->setColliderDimensions({25.0f, 25.0f});
+    mGameState.player->setSpeed(140.0f);
+    mGameState.player->setColliderDimensions({20.0f, 20.0f});
     mGameState.player->setFrameSpeed(6.0f);
 
     mGameState.enemies.clear();
@@ -95,7 +95,7 @@ void LevelA::initialise() {
                                            NPC                               // entity type)
             );
             newBullet->setColliderDimensions(
-                {newBullet->getColliderDimensions().x - 10.0f, newBullet->getColliderDimensions().y - 10.0f});
+                {newBullet->getColliderDimensions().x - 12.0f, newBullet->getColliderDimensions().y - 12.0f});
             enemy->addBullet(newBullet);
         }
     }

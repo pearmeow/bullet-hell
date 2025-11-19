@@ -40,7 +40,7 @@ void Player::update(float deltaTime, Entity* player, Map* map, std::vector<Enemy
     Entity::checkCollisionX(map);
 
     mIframes -= deltaTime;
-    if (mIframes < 0.0f) {
+    if (mIframes <= 0.0f) {
         mIframes = 0.0f;
     } else {
         mDirection = INVINCIBLE;
@@ -91,7 +91,7 @@ void Player::checkCollisionX(std::vector<Enemy*>& entities) {
                 break;
             }
             if (isColliding(bullet)) {
-                mIframes = 10.0f;
+                mIframes = 2.0f;
                 break;
             }
         }
