@@ -28,15 +28,11 @@ void Player::update(float deltaTime, Entity* player, Map* map, std::vector<Enemy
     mVelocity.y = mMovement.y * mSpeed;
 
     mPosition.y += mVelocity.y * deltaTime;
-    if (mIframes == 0.0f) {
-        checkCollisionY(enemies);
-    }
+    checkCollisionY(enemies);
     Entity::checkCollisionY(map);
 
     mPosition.x += mVelocity.x * deltaTime;
-    if (mIframes == 0.0f) {
-        checkCollisionX(enemies);
-    }
+    checkCollisionX(enemies);
     Entity::checkCollisionX(map);
 
     mIframes -= deltaTime;

@@ -127,10 +127,10 @@ void LevelA::update(float deltaTime) {
 void LevelA::render() {
     ClearBackground(ColorFromHex(mBGColourHexCode));
 
-    mGameState.player->render();
     for (Enemy* enemy : mGameState.enemies) {
         enemy->render();
     }
+    mGameState.player->render();
 }
 
 void LevelA::shutdown() {
