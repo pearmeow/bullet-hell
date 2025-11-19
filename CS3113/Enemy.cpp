@@ -1,9 +1,11 @@
 #include "Enemy.h"
 
+#include <cmath>
+
 #include "Entity.h"
 #include "cs3113.h"
 
-float straightPattern(float deltaTime);
+float straightPattern(float elapsedTime, float& angle);
 
 Enemy::Enemy(Vector2 position, Vector2 scale, const char* textureFile, TextureType textureType,
              Vector2 spriteSheetDimensions, std::map<Direction, std::vector<int>> animationAtlas,
@@ -86,8 +88,8 @@ void Enemy::addBullet(Bullet* bullet) {
     mInactiveBullets.push(bullet);
 }
 
-float straightPattern(float elapsedTime) {
-    if (elapsedTime >= 3.0f) {
+float straightPattern(float elapsedTime, float& angle) {
+    if (elapsedTime >= 1.0f) {
         return 30.0f;
     } else {
         return 10.0f;
