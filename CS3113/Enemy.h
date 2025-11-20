@@ -13,7 +13,7 @@ private:
     std::queue<Bullet*> mInactiveBullets;
     float mAttackDelay = 0.0f;
     float mAttackSpeed = 2.0f;
-    int mAttacks = 5;
+    int mAttacks = 25;
 
 public:
     Enemy(Vector2 position, Vector2 scale, const char* textureFile, TextureType textureType,

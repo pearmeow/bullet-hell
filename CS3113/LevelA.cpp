@@ -88,7 +88,7 @@ void LevelA::initialise() {
                                            ));
 
     for (Enemy* enemy : mGameState.enemies) {
-        for (int i = 0; i < 400; ++i) {
+        for (int i = 0; i < 2500; ++i) {
             Bullet* newBullet = new Bullet({mOrigin.x, mOrigin.y - 450.0f},  // position
                                            {50.0f, 50.0f},                   // scale
                                            "./assets/bullet.png",            // texture file address
