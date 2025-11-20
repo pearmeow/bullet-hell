@@ -62,10 +62,11 @@ void Enemy::update(float deltaTime, Entity* player, Map* map, Entity* collidable
     if (mAttackDelay >= mAttackSpeed) {
         mAttackDelay = 0.0f;
         float rotation = 0.0f;
+        float step = 360.0f / mAttacks;
         for (int count = 0; count < mAttacks; ++count) {
             Bullet* nextBullet = mInactiveBullets.front();
             nextBullet->setPosition({mPosition.x, mPosition.y + mScale.y + 5.0f});
-            nextBullet->setAngle(rotation);
+            nextBullet->setAngle(rotation + count * step);
             nextBullet->setPattern(straightPattern);
             mBullets.push_back(nextBullet);
             mInactiveBullets.pop();
@@ -89,7 +90,7 @@ void Enemy::addBullet(Bullet* bullet) {
 }
 
 float straightPattern(float elapsedTime, float& angle) {
-    if (std::sin(3.14 * elapsedTime * 50 / 180.0f) > 0) {
+    if (std::cos(elapsedTime * 75 * 3.14 / 180.0f) > 0) {
         angle += 0.5f;
     } else {
         angle -= 0.5f;
