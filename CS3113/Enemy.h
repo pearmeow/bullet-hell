@@ -13,6 +13,7 @@ private:
     std::queue<Bullet*> mInactiveBullets;
     float mAttackDelay = 0.0f;
     float mAttackSpeed = 2.0f;
+    float mElapsedTime = 0.0f;
     int mAttacks = 25;
 
 public:
