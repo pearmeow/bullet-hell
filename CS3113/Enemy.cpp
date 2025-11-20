@@ -64,9 +64,11 @@ void Enemy::update(float deltaTime, Entity* player, Map* map, Entity* collidable
         float rotation = 0.0f;
         float step = 360.0f / mAttacks;
         for (int count = 0; count < mAttacks; ++count) {
+            float nextRotation = rotation + count * step;
             Bullet* nextBullet = mInactiveBullets.front();
-            nextBullet->setPosition({mPosition.x, mPosition.y + mScale.y + 5.0f});
-            nextBullet->setAngle(rotation + count * step);
+            nextBullet->setPosition({mPosition.x + (5.0f + mScale.x) * std::sin(nextRotation * 3.14f / 180.0f),
+                                     mPosition.y + (5.0f + mScale.y) * std::cos(nextRotation * 3.14f / 180.0f)});
+            nextBullet->setAngle(nextRotation);
             nextBullet->setPattern(straightPattern);
             mBullets.push_back(nextBullet);
             mInactiveBullets.pop();
