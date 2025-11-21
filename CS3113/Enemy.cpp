@@ -64,15 +64,15 @@ void Enemy::update(float deltaTime, Entity* player, Map* map, Entity* collidable
     if (mAttackDelay >= mAttackSpeed) {
         // conditional based on mElapsedTime to switch up attacks
         mAttackDelay = 0.0f;
-        // if (std::sin(mElapsedTime * 100 * 3.14 / 180.0f) >= 0) {
-        // one attack
-        // splitAttack(0, 10, fastPattern);
-        delayedAttack(0, 10, 0.5f, fastPattern);
-        // } else {
-        // another attack
-        // splitAttack(0, 10, fastPattern);
-        // splitAttack(mElapsedTime * 100, 10, wavyPattern);
-        // }
+        if (std::sin(mElapsedTime * 100 * 3.14 / 180.0f) >= 0) {
+            // one attack
+            splitAttack(0, 10, fastPattern);
+            delayedAttack(-90, 50, 0.2f, fastPattern);
+        } else {
+            // another attack
+            splitAttack(0, 10, fastPattern);
+            splitAttack(mElapsedTime * 100, 10, wavyPattern);
+        }
     }
 }
 
