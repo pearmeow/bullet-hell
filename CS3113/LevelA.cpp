@@ -12,7 +12,6 @@ LevelA::~LevelA() {
 }
 
 void LevelA::initialise() {
-    printf("joever\n");
     mGameState.nextSceneID = 0;
 
     mGameState.bgm = LoadMusicStream("");
@@ -75,6 +74,7 @@ void LevelA::initialise() {
     mGameState.player->setAcceleration({0.0f, 0.0f});
     mGameState.player->setSpeed(140.0f);
     mGameState.player->setColliderDimensions({20.0f, 20.0f});
+    mGameState.player->setColliderRadius(mGameState.player->getColliderDimensions().x / 2.0f);
     mGameState.player->setFrameSpeed(6.0f);
 
     mGameState.enemies.clear();
@@ -88,6 +88,7 @@ void LevelA::initialise() {
                                            ));
 
     for (Enemy* enemy : mGameState.enemies) {
+        enemy->setColliderRadius(0.0f);
         for (int i = 0; i < 2500; ++i) {
             Bullet* newBullet = new Bullet({mOrigin.x, mOrigin.y - 450.0f},  // position
                                            {50.0f, 50.0f},                   // scale
@@ -95,7 +96,8 @@ void LevelA::initialise() {
                                            NPC                               // entity type)
             );
             newBullet->setColliderDimensions(
-                {newBullet->getColliderDimensions().x - 12.0f, newBullet->getColliderDimensions().y - 12.0f});
+                {newBullet->getColliderDimensions().x - 14.0f, newBullet->getColliderDimensions().y - 14.0f});
+            newBullet->setColliderRadius(newBullet->getColliderDimensions().x / 2.0f);
             enemy->addBullet(newBullet);
         }
     }

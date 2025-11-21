@@ -17,6 +17,7 @@ public:
     void update(float deltaTime, Entity* player, Map* map, std::vector<Enemy*>& enemies);
     void checkCollisionY(std::vector<Enemy*>& entities);
     void checkCollisionX(std::vector<Enemy*>& entities);
+    bool isColliding(Bullet* other) const;
 };
 
 #endif

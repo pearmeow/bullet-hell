@@ -389,7 +389,7 @@ void Entity::render() {
     DrawTexturePro(mTexture, textureArea, destinationArea, originOffset, mAngle, WHITE);
 
     // displayCollider();
-    // displayCircleCollider();
+    displayCircleCollider();
 }
 
 void Entity::displayCollider() {
@@ -407,7 +407,7 @@ void Entity::displayCollider() {
 }
 
 void Entity::displayCircleCollider() {
-    DrawCircle(mPosition.x, mPosition.y, mColliderRadius, GREEN);
+    DrawCircleLines(mPosition.x, mPosition.y, mColliderRadius, GREEN);
 }
 
 void Entity::setColliderRadius(float radius) {

@@ -57,7 +57,7 @@ void Player::checkCollisionY(std::vector<Enemy*>& entities) {
                 break;
             }
         }
-        if (isColliding(collidableEntity)) {
+        if (Entity::isColliding(collidableEntity)) {
             // STEP 2: Calculate the distance between its centre and our centre
             //         and use that to calculate the amount of overlap between
             //         both bodies.
@@ -91,7 +91,7 @@ void Player::checkCollisionX(std::vector<Enemy*>& entities) {
                 break;
             }
         }
-        if (isColliding(collidableEntity)) {
+        if (Entity::isColliding(collidableEntity)) {
             // When standing on a platform, we're always slightly overlapping
             // it vertically due to gravity, which causes false horizontal
             // collision detections. So the solution I found is only resolve X
@@ -123,4 +123,19 @@ void Player::checkCollisionX(std::vector<Enemy*>& entities) {
             }
         }
     }
+}
+
+// circular collision
+bool Player::isColliding(Bullet* other) const {
+    if (!other->isActive()) return false;
+
+    float xDistance = fabs(mPosition.x - other->getPosition().x);
+    float yDistance = fabs(mPosition.y - other->getPosition().y);
+
+    float distance = xDistance * xDistance + yDistance * yDistance;
+    float colliderDistance = mColliderRadius + other->getColliderRadius();
+
+    if (distance < colliderDistance * colliderDistance) return true;
+
+    return false;
 }

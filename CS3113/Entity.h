@@ -147,7 +147,7 @@ public:
         return mScale;
     }
     Vector2 getColliderDimensions() const {
-        return mScale;
+        return mColliderDimensions;
     }
 
     float getColliderRadius();
