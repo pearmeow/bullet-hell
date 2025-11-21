@@ -18,6 +18,7 @@ protected:
 
     Vector2 mScale;
     Vector2 mColliderDimensions;
+    float mColliderRadius;
 
     Texture2D mTexture;
     TextureType mTextureType;
@@ -102,6 +103,7 @@ public:
         mEntityStatus = INACTIVE;
     }
     void displayCollider();
+    void displayCircleCollider();
 
     bool isActive() {
         return mEntityStatus == ACTIVE ? true : false;
@@ -147,6 +149,9 @@ public:
     Vector2 getColliderDimensions() const {
         return mScale;
     }
+
+    float getColliderRadius();
+
     Vector2 getSpriteSheetDimensions() const {
         return mSpriteSheetDimensions;
     }
@@ -213,6 +218,9 @@ public:
     void setColliderDimensions(Vector2 newDimensions) {
         mColliderDimensions = newDimensions;
     }
+
+    void setColliderRadius(float radius);
+
     void setSpriteSheetDimensions(Vector2 newDimensions) {
         mSpriteSheetDimensions = newDimensions;
     }

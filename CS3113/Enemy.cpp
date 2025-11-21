@@ -67,7 +67,7 @@ void Enemy::update(float deltaTime, Entity* player, Map* map, Entity* collidable
         if (std::sin(mElapsedTime * 100 * 3.14 / 180.0f) >= 0) {
             // one attack
             splitAttack(0, 10, fastPattern);
-            delayedAttack(-90, 50, 0.2f, fastPattern);
+            delayedAttack(-90, 40, 0.2f, fastPattern);
         } else {
             // another attack
             splitAttack(0, 10, fastPattern);

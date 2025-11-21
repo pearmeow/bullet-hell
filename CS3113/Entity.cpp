@@ -1,5 +1,7 @@
 #include "Entity.h"
 
+#include <raylib.h>
+
 Entity::Entity()
     : mPosition{0.0f, 0.0f},
       mMovement{0.0f, 0.0f},
@@ -7,6 +9,7 @@ Entity::Entity()
       mAcceleration{0.0f, 0.0f},
       mScale{DEFAULT_SIZE, DEFAULT_SIZE},
       mColliderDimensions{DEFAULT_SIZE, DEFAULT_SIZE},
+      mColliderRadius{DEFAULT_SIZE},
       mTexture{0},
       mTextureType{SINGLE},
       mAngle{0.0f},
@@ -25,6 +28,7 @@ Entity::Entity(Vector2 position, Vector2 scale, const char* textureFilepath, Ent
       mScale{scale},
       mMovement{0.0f, 0.0f},
       mColliderDimensions{scale},
+      mColliderRadius{scale.x},
       mTexture{LoadTexture(textureFilepath)},
       mTextureType{SINGLE},
       mDirection{RIGHT},
@@ -45,6 +49,7 @@ Entity::Entity(Vector2 position, Vector2 scale, const char* textureFilepath, Tex
       mMovement{0.0f, 0.0f},
       mScale{scale},
       mColliderDimensions{scale},
+      mColliderRadius{scale.x},
       mTexture{LoadTexture(textureFilepath)},
       mTextureType{ATLAS},
       mSpriteSheetDimensions{spriteSheetDimensions},
@@ -81,8 +86,6 @@ void Entity::checkCollisionY(std::vector<Entity*>&& entities) {
                 mPosition.y += yOverlap;
                 mVelocity.y = 0;
                 mIsCollidingTop = true;
-
-                if (collidableEntity->mEntityType == BLOCK) collidableEntity->deactivate();
             }
         }
     }
@@ -385,7 +388,8 @@ void Entity::render() {
     // Render the texture on screen
     DrawTexturePro(mTexture, textureArea, destinationArea, originOffset, mAngle, WHITE);
 
-    displayCollider();
+    // displayCollider();
+    // displayCircleCollider();
 }
 
 void Entity::displayCollider() {
@@ -400,4 +404,16 @@ void Entity::displayCollider() {
                        colliderBox.height,  // Height
                        GREEN                // Color
     );
+}
+
+void Entity::displayCircleCollider() {
+    DrawCircle(mPosition.x, mPosition.y, mColliderRadius, GREEN);
+}
+
+void Entity::setColliderRadius(float radius) {
+    mColliderRadius = radius;
+}
+
+float Entity::getColliderRadius() {
+    return mColliderRadius;
 }
