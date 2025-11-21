@@ -5,7 +5,7 @@
 #include "Entity.h"
 #include "cs3113.h"
 
-float straightPattern(float elapsedTime, float& angle);
+float wavyPattern(float elapsedTime, float& angle);
 float fastPattern(float elapsedTime, float& angle);
 
 Enemy::Enemy(Vector2 position, Vector2 scale, const char* textureFile, TextureType textureType,
@@ -51,7 +51,7 @@ void Enemy::update(float deltaTime, Entity* player, Map* map, Entity* collidable
     resetMovement();
     for (auto bullet = mBullets.begin(); bullet != mBullets.end(); ++bullet) {
         (*bullet)->update(deltaTime, nullptr, nullptr, nullptr, 0);
-        if (!(*bullet)->isActive()) {
+        if (!(*bullet)->isActive() && (*bullet)->getDelay() <= 0.0f) {
             // bullet goes back to inactive
             mInactiveBullets.push(*bullet);
             // erase and go to the next one: erase returns the next iterator
@@ -62,39 +62,50 @@ void Enemy::update(float deltaTime, Entity* player, Map* map, Entity* collidable
     }
     mAttackDelay += deltaTime;
     if (mAttackDelay >= mAttackSpeed) {
-        // conditional based on deltaTime to switch up attacks
+        // conditional based on mElapsedTime to switch up attacks
         mAttackDelay = 0.0f;
-        if (mElapsedTime >= 10) {
-            // one attack
-            float rotation = 0.0f;
-            float step = 360.0f / mAttacks;
-            for (int count = 0; count < mAttacks; ++count) {
-                float nextRotation = rotation + count * step;
-                Bullet* nextBullet = mInactiveBullets.front();
-                nextBullet->setPosition(
-                    {mPosition.x + (5.0f + mScale.x) * std::sin(nextRotation * 3.14f / 180.0f),
-                     mPosition.y + (5.0f + mScale.y) * std::cos(nextRotation * 3.14f / 180.0f)});
-                nextBullet->setAngle(nextRotation);
-                nextBullet->setPattern(straightPattern);
-                mBullets.push_back(nextBullet);
-                mInactiveBullets.pop();
-            }
-        } else {
-            // another attack
-            float rotation = 0.0f;
-            float step = 360.0f / mAttacks;
-            for (int count = 0; count < mAttacks * 1.5; ++count) {
-                float nextRotation = rotation + count * step;
-                Bullet* nextBullet = mInactiveBullets.front();
-                nextBullet->setPosition(
-                    {mPosition.x + (5.0f + mScale.x) * std::sin(nextRotation * 3.14f / 180.0f),
-                     mPosition.y + (5.0f + mScale.y) * std::cos(nextRotation * 3.14f / 180.0f)});
-                nextBullet->setAngle(nextRotation);
-                nextBullet->setPattern(fastPattern);
-                mBullets.push_back(nextBullet);
-                mInactiveBullets.pop();
-            }
-        }
+        // if (std::sin(mElapsedTime * 100 * 3.14 / 180.0f) >= 0) {
+        // one attack
+        // splitAttack(0, 10, fastPattern);
+        delayedAttack(0, 10, 0.5f, fastPattern);
+        // } else {
+        // another attack
+        // splitAttack(0, 10, fastPattern);
+        // splitAttack(mElapsedTime * 100, 10, wavyPattern);
+        // }
+    }
+}
+
+void Enemy::delayedAttack(float initAngle, int attacks, float delay,
+                          float (*pattern)(float elapsedTime, float& angle)) {
+    float angle = initAngle;
+    float step = 360.0f / attacks;
+    for (int count = 0; count < attacks; ++count) {
+        float nextAngle = angle + count * step;
+        Bullet* nextBullet = mInactiveBullets.front();
+        nextBullet->setPosition({mPosition.x + (5.0f + mScale.x) * std::sin(nextAngle * 3.14f / 180.0f),
+                                 mPosition.y + (5.0f + mScale.y) * std::cos(nextAngle * 3.14f / 180.0f)});
+        nextBullet->setAngle(nextAngle);
+        nextBullet->deactivate();
+        nextBullet->setDelay(delay * count);
+        nextBullet->setPattern(pattern);
+        mBullets.push_back(nextBullet);
+        mInactiveBullets.pop();
+    }
+}
+
+void Enemy::splitAttack(float initAngle, int attacks, float (*pattern)(float elapsedTime, float& angle)) {
+    float angle = initAngle;
+    float step = 360.0f / attacks;
+    for (int count = 0; count < attacks; ++count) {
+        float nextAngle = angle + count * step;
+        Bullet* nextBullet = mInactiveBullets.front();
+        nextBullet->setPosition({mPosition.x + (5.0f + mScale.x) * std::sin(nextAngle * 3.14f / 180.0f),
+                                 mPosition.y + (5.0f + mScale.y) * std::cos(nextAngle * 3.14f / 180.0f)});
+        nextBullet->setAngle(nextAngle);
+        nextBullet->setPattern(pattern);
+        mBullets.push_back(nextBullet);
+        mInactiveBullets.pop();
     }
 }
 
@@ -117,7 +128,7 @@ float fastPattern(float elapsedTime, float& angle) {
     return 90.0f;
 }
 
-float straightPattern(float elapsedTime, float& angle) {
+float wavyPattern(float elapsedTime, float& angle) {
     if (std::cos(elapsedTime * 75 * 3.14 / 180.0f) > 0) {
         angle += 0.5f;
     } else {

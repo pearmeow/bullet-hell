@@ -24,6 +24,9 @@ public:
     void update(float deltaTime, Entity* player, Map* map, Entity* collidableEntities,
                 int collisionCheckCount) override;
     void render();
+    void splitAttack(float initAngle, int attacks, float (*pattern)(float elapsedTime, float& angle));
+    void delayedAttack(float initAngle, int attacks, float delay,
+                       float (*pattern)(float elapsedTime, float& angle));
     std::list<Bullet*>& getBullets();
     void addBullet(Bullet* bullet);
 };

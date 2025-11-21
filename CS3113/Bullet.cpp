@@ -17,6 +17,13 @@ Bullet::Bullet(Vector2 position, Vector2 scale, const char* textureFile, Texture
 
 void Bullet::update(float deltaTime, Entity* player, Map* map, Entity* collidableEntities,
                     int collisionCheckCount) {
+    mDelay -= deltaTime;
+    if (mDelay <= 0.0f) {
+        activate();
+        mDelay = 0;
+    } else {
+        deactivate();
+    }
     if (!isActive()) {
         return;
     }
@@ -31,4 +38,12 @@ void Bullet::update(float deltaTime, Entity* player, Map* map, Entity* collidabl
 
 void Bullet::setPattern(float (*newPattern)(float elapsedTime, float& angle)) {
     mPattern = newPattern;
+}
+
+void Bullet::setDelay(float delay) {
+    mDelay = delay;
+}
+
+float Bullet::getDelay() {
+    return mDelay;
 }
