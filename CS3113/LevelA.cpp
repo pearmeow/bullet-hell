@@ -96,7 +96,7 @@ void LevelA::initialise() {
                                            NPC                               // entity type)
             );
             newBullet->setColliderDimensions(
-                {newBullet->getColliderDimensions().x - 14.0f, newBullet->getColliderDimensions().y - 14.0f});
+                {newBullet->getColliderDimensions().x - 8.0f, newBullet->getColliderDimensions().y - 8.0f});
             newBullet->setColliderRadius(newBullet->getColliderDimensions().x / 2.0f);
             enemy->addBullet(newBullet);
         }
@@ -129,10 +129,10 @@ void LevelA::update(float deltaTime) {
 void LevelA::render() {
     ClearBackground(ColorFromHex(mBGColourHexCode));
 
+    mGameState.player->render();
     for (Enemy* enemy : mGameState.enemies) {
         enemy->render();
     }
-    mGameState.player->render();
 }
 
 void LevelA::shutdown() {
