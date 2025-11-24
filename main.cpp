@@ -68,16 +68,24 @@ void initialise() {
 
 void processInput() {
     if (IsKeyDown(KEY_A)) {
-        gCurrentScene->getState().player->moveLeft();
+        if (gCurrentScene->getState().player != nullptr) {
+            gCurrentScene->getState().player->moveLeft();
+        }
     }
     if (IsKeyDown(KEY_D)) {
-        gCurrentScene->getState().player->moveRight();
+        if (gCurrentScene->getState().player != nullptr) {
+            gCurrentScene->getState().player->moveRight();
+        }
     }
     if (IsKeyDown(KEY_W)) {
-        gCurrentScene->getState().player->moveUp();
+        if (gCurrentScene->getState().player != nullptr) {
+            gCurrentScene->getState().player->moveUp();
+        }
     }
     if (IsKeyDown(KEY_S)) {
-        gCurrentScene->getState().player->moveDown();
+        if (gCurrentScene->getState().player != nullptr) {
+            gCurrentScene->getState().player->moveDown();
+        }
     }
 
     if (IsKeyPressed(KEY_ENTER)) {

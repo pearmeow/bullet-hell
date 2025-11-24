@@ -1,5 +1,6 @@
-#include "Entity.h"
 #include "LevelB.h"
+
+#include "Entity.h"
 
 LevelB::LevelB() : Scene{{0.0f}, nullptr} {
 }
@@ -119,6 +120,10 @@ void LevelB::update(float deltaTime) {
                               mGameState.map,     // map
                               mGameState.enemies  // enemies (vector)
     );
+
+    if (mGameState.player->getHealth() <= 0) {
+        mGameState.nextSceneID = 3;
+    }
 
     for (Enemy* enemy : mGameState.enemies) {
         enemy->update(deltaTime, nullptr, nullptr, nullptr, 0);

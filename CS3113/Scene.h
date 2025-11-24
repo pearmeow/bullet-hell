@@ -5,8 +5,8 @@
 #define SCENE_H
 
 struct GameState {
-    Player* player;
-    Map* map;
+    Player* player = nullptr;
+    Map* map = nullptr;
     Music bgm;
 
     std::vector<Enemy*> enemies;

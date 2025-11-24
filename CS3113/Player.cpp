@@ -53,6 +53,7 @@ void Player::checkCollisionY(std::vector<Enemy*>& entities) {
                 break;
             }
             if (isColliding(bullet)) {
+                --mHealth;
                 mIframes = 2.0f;
                 break;
             }
