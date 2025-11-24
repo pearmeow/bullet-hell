@@ -7,7 +7,7 @@ class Bullet : public Entity {
 private:
     float (*mPattern)(float elapsedTime, float& angle);
     float mElapsedTime = 0.0f;
-    float mTimeAlive = 50.0f;
+    float mTimeAlive = 35.0f;
     float mDelay = 0.0f;
 
 public:
