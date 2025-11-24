@@ -11,6 +11,9 @@
 #include <raylib.h>
 
 #include "CS3113/LevelA.h"
+#include "CS3113/LevelB.h"
+#include "CS3113/LevelC.h"
+#include "CS3113/LevelD.h"
 #include "CS3113/Scene.h"
 #include "CS3113/cs3113.h"
 
@@ -27,7 +30,11 @@ float gPreviousTicks = 0.0f, gTimeAccumulator = 0.0f;
 
 std::vector<Scene*> gLevels;
 Scene* gCurrentScene;
+size_t gSceneIndex = 0;
 LevelA* gLevelA;
+LevelB* gLevelB;
+LevelC* gLevelC;
+LevelD* gLevelD;
 
 // Function Declarations
 void switchToScene(Scene* scene);
@@ -46,9 +53,15 @@ void initialise() {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Scenes");
     InitAudioDevice();
     gLevelA = new LevelA(ORIGIN, "#000000");
+    gLevelB = new LevelB(ORIGIN, "#000000");
+    gLevelC = new LevelC(ORIGIN, "#000000");
+    gLevelD = new LevelD(ORIGIN, "#000000");
     gLevels.push_back(gLevelA);
+    gLevels.push_back(gLevelB);
+    gLevels.push_back(gLevelC);
+    gLevels.push_back(gLevelD);
 
-    switchToScene(gLevels[0]);
+    switchToScene(gLevels[gSceneIndex]);
 
     SetTargetFPS(FPS);
 }
@@ -68,6 +81,13 @@ void processInput() {
     }
 
     if (IsKeyPressed(KEY_ENTER)) {
+        if (gSceneIndex == 0 || gSceneIndex == 3) {
+            gSceneIndex = (gSceneIndex + 1) % gLevels.size();
+            switchToScene(gLevels[gSceneIndex]);
+        } else if (gSceneIndex == 2) {
+            gSceneIndex = 0;
+            switchToScene(gLevels[gSceneIndex]);
+        }
     }
 
     if (IsKeyPressed(KEY_Q) || WindowShouldClose()) gAppStatus = TERMINATED;
@@ -113,9 +133,10 @@ int main() {
         processInput();
         update();
 
-        // if (gCurrentScene->getState().nextSceneID > 0) {
-        // switchToScene(gLevels[gSceneIndex]);
-        // }
+        if (gCurrentScene->getState().nextSceneID > 0) {
+            gSceneIndex = gCurrentScene->getState().nextSceneID;
+            switchToScene(gLevels[gSceneIndex]);
+        }
 
         render();
     }

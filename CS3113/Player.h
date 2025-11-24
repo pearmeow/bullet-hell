@@ -6,6 +6,7 @@
 
 class Player : public Entity {
 private:
+    int mHealth = 3;
     float mIframes = 0.0f;
 
 public:
@@ -18,6 +19,7 @@ public:
     void checkCollisionY(std::vector<Enemy*>& entities);
     void checkCollisionX(std::vector<Enemy*>& entities);
     bool isColliding(Bullet* other) const;
+    int getHealth() const;
 };
 
 #endif

@@ -3,7 +3,7 @@
 
 #include "Scene.h"
 
-// Victory scene
+// Lose screen
 class LevelD : public Scene {
 public:
     LevelD();

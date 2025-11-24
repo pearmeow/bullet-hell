@@ -87,6 +87,7 @@ void Player::checkCollisionX(std::vector<Enemy*>& entities) {
                 break;
             }
             if (isColliding(bullet)) {
+                --mHealth;
                 mIframes = 2.0f;
                 break;
             }
@@ -138,4 +139,8 @@ bool Player::isColliding(Bullet* other) const {
     if (distance < colliderDistance * colliderDistance) return true;
 
     return false;
+}
+
+int Player::getHealth() const {
+    return mHealth;
 }
