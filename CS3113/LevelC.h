@@ -3,7 +3,7 @@
 
 #include "Scene.h"
 
-class LevelA : public Scene {
+class LevelC : public Scene {
 private:
     static constexpr int LEVEL_WIDTH = 6;
     static constexpr int LEVEL_HEIGHT = 7;
@@ -22,9 +22,9 @@ private:
 public:
     static constexpr float TILE_DIMENSION = 200.0f;
 
-    LevelA();
-    LevelA(Vector2 origin, const char* bgHexCode);
-    ~LevelA();
+    LevelC();
+    LevelC(Vector2 origin, const char* bgHexCode);
+    ~LevelC();
 
     void initialise() override;
     void update(float deltaTime) override;
