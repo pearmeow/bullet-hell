@@ -1,15 +1,15 @@
-#include "LevelA.h"
+#include "LevelD.h"
 
-LevelA::LevelA() : Scene{{0.0f}, nullptr} {
+LevelD::LevelD() : Scene{{0.0f}, nullptr} {
 }
-LevelA::LevelA(Vector2 origin, const char* bgHexCode) : Scene{origin, bgHexCode} {
+LevelD::LevelD(Vector2 origin, const char* bgHexCode) : Scene{origin, bgHexCode} {
 }
 
-LevelA::~LevelA() {
+LevelD::~LevelD() {
     shutdown();
 }
 
-void LevelA::initialise() {
+void LevelD::initialise() {
     mGameState.nextSceneID = 0;
 
     mGameState.bgm = LoadMusicStream("");
@@ -26,14 +26,14 @@ void LevelA::initialise() {
     mGameState.camera.zoom = 1.0f;       // default zoom
 }
 
-void LevelA::update(float deltaTime) {
+void LevelD::update(float deltaTime) {
     UpdateMusicStream(mGameState.bgm);
 }
 
-void LevelA::render() {
+void LevelD::render() {
     ClearBackground(ColorFromHex(mBGColourHexCode));
 }
 
-void LevelA::shutdown() {
+void LevelD::shutdown() {
     UnloadMusicStream(mGameState.bgm);
 }

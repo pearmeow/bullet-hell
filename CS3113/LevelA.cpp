@@ -1,17 +1,16 @@
-#include "LevelA.h"
-
 #include "Entity.h"
+#include "LevelB.h"
 
-LevelA::LevelA() : Scene{{0.0f}, nullptr} {
+LevelB::LevelB() : Scene{{0.0f}, nullptr} {
 }
-LevelA::LevelA(Vector2 origin, const char* bgHexCode) : Scene{origin, bgHexCode} {
+LevelB::LevelB(Vector2 origin, const char* bgHexCode) : Scene{origin, bgHexCode} {
 }
 
-LevelA::~LevelA() {
+LevelB::~LevelB() {
     shutdown();
 }
 
-void LevelA::initialise() {
+void LevelB::initialise() {
     mGameState.nextSceneID = 0;
 
     mGameState.bgm = LoadMusicStream("");
@@ -112,7 +111,7 @@ void LevelA::initialise() {
     mGameState.camera.zoom = 1.0f;       // default zoom
 }
 
-void LevelA::update(float deltaTime) {
+void LevelB::update(float deltaTime) {
     UpdateMusicStream(mGameState.bgm);
 
     mGameState.player->update(deltaTime,          // delta time / fixed timestep
@@ -126,7 +125,7 @@ void LevelA::update(float deltaTime) {
     }
 }
 
-void LevelA::render() {
+void LevelB::render() {
     ClearBackground(ColorFromHex(mBGColourHexCode));
 
     mGameState.player->render();
@@ -135,7 +134,7 @@ void LevelA::render() {
     }
 }
 
-void LevelA::shutdown() {
+void LevelB::shutdown() {
     delete mGameState.player;
     for (Enemy* enemy : mGameState.enemies) {
         delete enemy;

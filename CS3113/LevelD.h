@@ -1,14 +1,14 @@
-#ifndef LEVEL_C
-#define LEVEL_C
+#ifndef LEVEL_D
+#define LEVEL_D
 
 #include "Scene.h"
 
 // Victory scene
-class LevelC : public Scene {
+class LevelD : public Scene {
 public:
-    LevelC();
-    LevelC(Vector2 origin, const char* bgHexCode);
-    ~LevelC();
+    LevelD();
+    LevelD(Vector2 origin, const char* bgHexCode);
+    ~LevelD();
 
     void initialise() override;
     void update(float deltaTime) override;
