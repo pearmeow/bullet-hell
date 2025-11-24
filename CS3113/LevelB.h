@@ -1,31 +1,30 @@
-#include "LevelA.h"
+#ifndef LEVEL_A
+#define LEVEL_A
 
-#ifndef LEVELB_H
-#define LEVELB_H
+#include "Scene.h"
 
-class LevelB : public Scene {
+class LevelA : public Scene {
 private:
-    static constexpr int LEVEL_WIDTH = 14;
-    static constexpr int LEVEL_HEIGHT = 8;
+    static constexpr int LEVEL_WIDTH = 6;
+    static constexpr int LEVEL_HEIGHT = 7;
     // clang-format off
     unsigned int mLevelData[LEVEL_WIDTH * LEVEL_HEIGHT] = {
-        4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-        4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-        4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-        4, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 4,
-        4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 4,
-        4, 2, 2, 2, 0, 0, 0, 2, 2, 2, 3, 3, 3, 4,
-        4, 3, 3, 3, 0, 0, 0, 3, 3, 3, 3, 3, 3, 4,
-        4, 3, 3, 3, 0, 0, 0, 3, 3, 3, 3, 3, 3, 4
+        1, 1, 1, 1, 1, 1,
+        1, 0, 0, 0, 0, 1,
+        1, 0, 0, 0, 0, 1,
+        1, 0, 0, 0, 0, 1,
+        1, 0, 0, 0, 0, 1,
+        1, 0, 0, 0, 0, 1,
+        1, 1, 1, 1, 1, 1
     };
     // clang-format on
 
 public:
-    static constexpr float TILE_DIMENSION = 75.0f, ACCELERATION_OF_GRAVITY = 981.0f, END_GAME_THRESHOLD = 800.0f;
+    static constexpr float TILE_DIMENSION = 200.0f;
 
-    LevelB();
-    LevelB(Vector2 origin, const char* bgHexCode);
-    ~LevelB();
+    LevelA();
+    LevelA(Vector2 origin, const char* bgHexCode);
+    ~LevelA();
 
     void initialise() override;
     void update(float deltaTime) override;
