@@ -3,6 +3,7 @@
 
 #include "Scene.h"
 
+// Actual gaming scene
 class LevelB : public Scene {
 private:
     static constexpr int LEVEL_WIDTH = 6;
