@@ -4,11 +4,9 @@ Final project made with raylib
 Requirement 1: Menu Screen (10%)
 --------------------------------
 
-- [ ] Show the name of your game and the text “Press enter to start” (or any variation thereof)
-- [ ] The menu must be a different Scene object. 
-- [ ] Do not just show/hide text.
-- [ ] It must also show the instructions
-- [ ] You can make a tutorial scene if you like
+- [x] Show the name of your game and the text “Press enter to start” (or any variation thereof)
+- [x] The menu must be a different Scene object. 
+- [x] It must also show the instructions
 
 Requirement 2: 2 Minutes of Gameplay (40%)
 ------------------------------------------
