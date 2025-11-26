@@ -32,6 +32,8 @@ void LevelD::update(float deltaTime) {
 
 void LevelD::render() {
     ClearBackground(ColorFromHex(mBGColourHexCode));
+    DrawText("You suck", mOrigin.x - 50.0f, mOrigin.y - 200.0f, 30, WHITE);
+    DrawText("Press ENTER to play again", mOrigin.x - 170.0f, mOrigin.y + 400.0f, 30, WHITE);
 }
 
 void LevelD::shutdown() {
