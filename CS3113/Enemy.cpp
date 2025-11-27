@@ -5,8 +5,8 @@
 #include "Entity.h"
 #include "cs3113.h"
 
-float wavyPattern(float elapsedTime, float& angle);
-float fastPattern(float elapsedTime, float& angle);
+float wavyPattern(float elapsedTime, float& angle, Entity* player);
+float fastPattern(float elapsedTime, float& angle, Entity* player);
 
 Enemy::Enemy(Vector2 position, Vector2 scale, const char* textureFile, TextureType textureType,
              Vector2 spriteSheetDimensions, std::map<Direction, std::vector<int>> animationAtlas,
@@ -77,7 +77,7 @@ void Enemy::update(float deltaTime, Entity* player, Map* map, Entity* collidable
 }
 
 void Enemy::delayedAttack(float initAngle, int attacks, float delay,
-                          float (*pattern)(float elapsedTime, float& angle)) {
+                          float (*pattern)(float elapsedTime, float& angle, Entity* player)) {
     float angle = initAngle;
     float step = 360.0f / attacks;
     for (int count = 0; count < attacks; ++count) {
@@ -94,7 +94,8 @@ void Enemy::delayedAttack(float initAngle, int attacks, float delay,
     }
 }
 
-void Enemy::splitAttack(float initAngle, int attacks, float (*pattern)(float elapsedTime, float& angle)) {
+void Enemy::splitAttack(float initAngle, int attacks,
+                        float (*pattern)(float elapsedTime, float& angle, Entity* player)) {
     float angle = initAngle;
     float step = 360.0f / attacks;
     for (int count = 0; count < attacks; ++count) {
@@ -124,11 +125,11 @@ void Enemy::addBullet(Bullet* bullet) {
     mInactiveBullets.push(bullet);
 }
 
-float fastPattern(float elapsedTime, float& angle) {
+float fastPattern(float elapsedTime, float& angle, Entity* player) {
     return 90.0f;
 }
 
-float wavyPattern(float elapsedTime, float& angle) {
+float wavyPattern(float elapsedTime, float& angle, Entity* player) {
     if (std::cos(elapsedTime * 75 * 3.14 / 180.0f) > 0) {
         angle += 0.5f;
     } else {

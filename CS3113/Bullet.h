@@ -5,7 +5,7 @@
 
 class Bullet : public Entity {
 private:
-    float (*mPattern)(float elapsedTime, float& angle);
+    float (*mPattern)(float elapsedTime, float& angle, Entity* player);
     float mElapsedTime = 0.0f;
     float mTimeAlive = 35.0f;
     float mDelay = 0.0f;
@@ -16,10 +16,10 @@ public:
     // provid a pattern
     Bullet(Vector2 position, Vector2 scale, const char* textureFile, TextureType textureType,
            Vector2 spriteSheetDimensions, std::map<Direction, std::vector<int>> animationAtlas,
-           EntityType entityType, float (*pattern)(float elapsedTime, float& angle));
+           EntityType entityType, float (*pattern)(float elapsedTime, float& angle, Entity* player));
     void update(float deltaTime, Entity* player, Map* map, Entity* collidableEntities,
                 int collisionCheckCount) override;
-    void setPattern(float (*mPattern)(float elapsedTime, float& angle));
+    void setPattern(float (*mPattern)(float elapsedTime, float& angle, Entity* player));
     void setDelay(float delay);
     float getDelay();
 };
