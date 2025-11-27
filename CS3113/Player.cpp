@@ -8,6 +8,8 @@ Player::Player(Vector2 position, Vector2 scale, const char* textureFile, Texture
                Vector2 spriteSheetDimensions, std::map<Direction, std::vector<int>> animationAtlas,
                EntityType entityType)
     : Entity(position, scale, textureFile, textureType, spriteSheetDimensions, animationAtlas, entityType) {
+    mHitbox = new Entity(position, {scale.x / 3.0f, scale.y / 3.0f}, "./assets/hitbox.png", NPC);
+    mHitbox->setColliderRadius(mHitbox->getScale().x / 2.0f);
 }
 
 // unused, just makes linker happy because of virtual
@@ -34,6 +36,8 @@ void Player::update(float deltaTime, Entity* player, Map* map, std::vector<Enemy
     mPosition.x += mVelocity.x * deltaTime;
     checkCollisionX(enemies);
     Entity::checkCollisionX(map);
+
+    mHitbox->setPosition(mPosition);
 
     mIframes -= deltaTime;
     if (mIframes <= 0.0f) {
@@ -142,6 +146,15 @@ bool Player::isColliding(Bullet* other) const {
     return false;
 }
 
+void Player::render() {
+    Entity::render();
+    mHitbox->render();
+}
+
 int Player::getHealth() const {
     return mHealth;
+}
+
+Player::~Player() {
+    delete mHitbox;
 }
