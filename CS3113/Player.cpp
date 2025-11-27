@@ -29,6 +29,11 @@ void Player::update(float deltaTime, Entity* player, Map* map, std::vector<Enemy
     mVelocity.x = mMovement.x * mSpeed;
     mVelocity.y = mMovement.y * mSpeed;
 
+    if (mShifted) {
+        mVelocity.x /= 2.0f;
+        mVelocity.y /= 2.0f;
+    }
+
     mPosition.y += mVelocity.y * deltaTime;
     checkCollisionY(enemies);
     Entity::checkCollisionY(map);
@@ -48,6 +53,7 @@ void Player::update(float deltaTime, Entity* player, Map* map, std::vector<Enemy
 
     if (mTextureType == ATLAS) animate(deltaTime);
     resetMovement();
+    mShifted = false;
 }
 
 void Player::checkCollisionY(std::vector<Enemy*>& entities) {
@@ -157,4 +163,8 @@ int Player::getHealth() const {
 
 Player::~Player() {
     delete mHitbox;
+}
+
+void Player::setShifted(bool isShifted) {
+    mShifted = isShifted;
 }

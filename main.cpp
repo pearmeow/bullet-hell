@@ -67,6 +67,12 @@ void initialise() {
 }
 
 void processInput() {
+    if (IsKeyDown(KEY_LEFT_SHIFT)) {
+        if (gCurrentScene->getState().player != nullptr) {
+            gCurrentScene->getState().player->setShifted(true);
+        }
+    }
+
     if (IsKeyDown(KEY_A)) {
         if (gCurrentScene->getState().player != nullptr) {
             gCurrentScene->getState().player->moveLeft();

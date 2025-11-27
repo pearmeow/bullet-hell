@@ -8,6 +8,7 @@ class Player : public Entity {
 private:
     int mHealth = 3;
     float mIframes = 0.0f;
+    bool mShifted = false;
     Entity* mHitbox = nullptr;
 
 public:
@@ -21,6 +22,7 @@ public:
     void update(float deltaTime, Entity* player, Map* map, std::vector<Enemy*>& enemies);
     void checkCollisionY(std::vector<Enemy*>& entities);
     void checkCollisionX(std::vector<Enemy*>& entities);
+    void setShifted(bool isShifted);
     bool isColliding(Bullet* other) const;
     int getHealth() const;
 };
