@@ -97,3 +97,7 @@ float Bullet::getDelay() {
 float Bullet::getElapsedTime() {
     return mElapsedTime;
 }
+
+void Bullet::setTimeAlive(float timeAlive) {
+    mTimeAlive = timeAlive;
+}

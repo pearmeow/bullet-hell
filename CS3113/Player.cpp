@@ -206,6 +206,7 @@ void Player::attack() {
     nextBullet->setAngle(angle);
     nextBullet->setPattern(playerBulletPattern);
     nextBullet->deactivate();
+    nextBullet->setTimeAlive(2.0f);
     mBullets.push_back(nextBullet);
     mInactiveBullets.pop();
 }

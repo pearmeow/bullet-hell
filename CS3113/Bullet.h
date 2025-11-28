@@ -26,6 +26,7 @@ public:
     bool isCollidingEnemy(Enemy* other) const;
     void setPattern(float (*mPattern)(Entity* player, Bullet* bullet));
     void setDelay(float delay);
+    void setTimeAlive(float timeAlive);
     float getDelay();
     float getElapsedTime();
 };
