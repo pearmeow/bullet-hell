@@ -30,6 +30,7 @@ public:
     void renderBullets();
     void addBullet(Bullet* bullet);
     void attack();
+    void clearBullets();
     bool isColliding(Bullet* other) const;
     int getHealth() const;
 };

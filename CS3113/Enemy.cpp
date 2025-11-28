@@ -173,3 +173,19 @@ void Enemy::updateBullets(float deltaTime, Entity* player, Map* map, Entity* col
         }
     }
 }
+
+void Enemy::setAttackDelay(float newAttackDelay) {
+    mAttackDelay = newAttackDelay;
+}
+
+void Enemy::setElapsedTime(float newElapsedTime) {
+    mElapsedTime = newElapsedTime;
+}
+
+void Enemy::clearBullets() {
+    while (!mBullets.empty()) {
+        mBullets.front()->deactivate();
+        mInactiveBullets.push(mBullets.front());
+        mBullets.pop_front();
+    }
+}

@@ -35,6 +35,9 @@ public:
     int getHealth() const;
     void updateBullets(float deltaTime, Entity* player, Map* map, Entity* collidableEntities,
                        int collisionCheckCount);
+    void clearBullets();
+    void setElapsedTime(float newElapsedTime);
+    void setAttackDelay(float newAttackDelay);
 };
 
 #endif

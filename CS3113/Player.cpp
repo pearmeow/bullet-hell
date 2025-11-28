@@ -185,10 +185,6 @@ int Player::getHealth() const {
     return mHealth;
 }
 
-Player::~Player() {
-    delete mHitbox;
-}
-
 void Player::setShifted(bool isShifted) {
     mShifted = isShifted;
 }
@@ -213,4 +209,24 @@ void Player::attack() {
 
 void Player::addBullet(Bullet* bullet) {
     mInactiveBullets.push(bullet);
+}
+
+Player::~Player() {
+    delete mHitbox;
+    while (!mInactiveBullets.empty()) {
+        mBullets.push_back(mInactiveBullets.front());
+        mInactiveBullets.pop();
+    }
+    for (Bullet* activeBullet : mBullets) {
+        delete activeBullet;
+    }
+    mBullets.clear();
+}
+
+void Player::clearBullets() {
+    while (!mBullets.empty()) {
+        mBullets.front()->deactivate();
+        mInactiveBullets.push(mBullets.front());
+        mBullets.pop_front();
+    }
 }
