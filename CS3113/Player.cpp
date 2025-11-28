@@ -1,8 +1,13 @@
 #include "Player.h"
 
+#include "Bullet.h"
 #include "Enemy.h"
 #include "Entity.h"
 #include "cs3113.h"
+
+float playerBulletPattern(Entity* player, Bullet* bullet) {
+    return 500.0f;
+}
 
 Player::Player(Vector2 position, Vector2 scale, const char* textureFile, TextureType textureType,
                Vector2 spriteSheetDimensions, std::map<Direction, std::vector<int>> animationAtlas,
@@ -49,6 +54,25 @@ void Player::update(float deltaTime, Entity* player, Map* map, std::vector<Enemy
         mIframes = 0.0f;
     } else {
         mDirection = INVINCIBLE;
+    }
+
+    mAttackDelay += deltaTime;
+    if (mAttackDelay >= mAttackSpeed) {
+        // conditional based on mElapsedTime to switch up attacks
+        mAttackDelay = 0.0f;
+        attack();
+    }
+
+    for (auto bullet = mBullets.begin(); bullet != mBullets.end(); ++bullet) {
+        (*bullet)->update(deltaTime, enemies, nullptr, nullptr, 0);
+        if (!(*bullet)->isActive() && (*bullet)->getDelay() <= 0.0f) {
+            // bullet goes back to inactive
+            mInactiveBullets.push(*bullet);
+            // erase and go to the next one: erase returns the next iterator
+            bullet = mBullets.erase(bullet);
+            // go back one because iterator gets incremented at the end of the for loop
+            --bullet;
+        }
     }
 
     if (mTextureType == ATLAS) animate(deltaTime);
@@ -167,4 +191,25 @@ Player::~Player() {
 
 void Player::setShifted(bool isShifted) {
     mShifted = isShifted;
+}
+
+void Player::renderBullets() {
+    for (Bullet* bullet : mBullets) {
+        bullet->render();
+    }
+}
+
+void Player::attack() {
+    float angle = 180.0f;
+    Bullet* nextBullet = mInactiveBullets.front();
+    nextBullet->setPosition({mPosition.x, mPosition.y - mColliderRadius});
+    nextBullet->setAngle(angle);
+    nextBullet->setPattern(playerBulletPattern);
+    nextBullet->deactivate();
+    mBullets.push_back(nextBullet);
+    mInactiveBullets.pop();
+}
+
+void Player::addBullet(Bullet* bullet) {
+    mInactiveBullets.push(bullet);
 }

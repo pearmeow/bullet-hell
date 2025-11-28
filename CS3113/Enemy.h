@@ -4,7 +4,8 @@
 #include <list>
 #include <queue>
 
-#include "Bullet.h"
+class Bullet;
+
 #include "Entity.h"
 
 class Enemy : public Entity {

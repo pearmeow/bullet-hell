@@ -3,6 +3,8 @@
 
 #include "Entity.h"
 
+class Enemy;
+
 class Bullet : public Entity {
 private:
     float (*mPattern)(Entity* player, Bullet* bullet);
@@ -19,6 +21,9 @@ public:
            EntityType entityType, float (*pattern)(Entity* player, Bullet* bullet));
     void update(float deltaTime, Entity* player, Map* map, Entity* collidableEntities,
                 int collisionCheckCount) override;
+    void update(float deltaTime, std::vector<Enemy*>& enemies, Map* map, Entity* collidableEntities,
+                int collisionCheckCount);
+    bool isCollidingEnemy(Enemy* other) const;
     void setPattern(float (*mPattern)(Entity* player, Bullet* bullet));
     void setDelay(float delay);
     float getDelay();

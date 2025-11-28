@@ -1,5 +1,9 @@
 #include "Bullet.h"
 
+#include <cstdio>
+
+#include "Enemy.h"
+
 float defaultPattern(Entity* player, Bullet* bullet) {
     return 5.0f;
 }
@@ -34,6 +38,48 @@ void Bullet::update(float deltaTime, Entity* player, Map* map, Entity* collidabl
     if (mElapsedTime >= mTimeAlive) {
         deactivate();
     }
+}
+
+void Bullet::update(float deltaTime, std::vector<Enemy*>& enemies, Map* map, Entity* collidableEntities,
+                    int collisionCheckCount) {
+    mDelay -= deltaTime;
+    if (mDelay <= 0.0f) {
+        activate();
+        mDelay = 0;
+    } else {
+        deactivate();
+    }
+    if (!isActive()) {
+        return;
+    }
+    mElapsedTime += deltaTime;
+    mSpeed = mPattern(nullptr, this);
+    mPosition.y += std::cos(mAngle * (3.1415f / 180.0f)) * mSpeed * deltaTime;
+    mPosition.x += std::sin(mAngle * (3.1415f / 180.0f)) * mSpeed * deltaTime;
+    for (Enemy* enemy : enemies) {
+        if (isCollidingEnemy(enemy)) {
+            // enemy loses health
+            printf("colliding with enemy\n");
+            deactivate();
+        }
+    }
+    if (mElapsedTime >= mTimeAlive) {
+        deactivate();
+    }
+}
+
+bool Bullet::isCollidingEnemy(Enemy* other) const {
+    if (!other->isActive()) return false;
+
+    float xDistance = fabs(mPosition.x - other->getPosition().x);
+    float yDistance = fabs(mPosition.y - other->getPosition().y);
+
+    float distance = xDistance * xDistance + yDistance * yDistance;
+    float colliderDistance = mColliderRadius + other->getColliderRadius();
+
+    if (distance < colliderDistance * colliderDistance) return true;
+
+    return false;
 }
 
 void Bullet::setPattern(float (*newPattern)(Entity* player, Bullet* bullet)) {

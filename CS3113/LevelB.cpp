@@ -1,6 +1,9 @@
 #include "LevelB.h"
 
+#include "Bullet.h"
+#include "Enemy.h"
 #include "Entity.h"
+#include "Player.h"
 
 LevelB::LevelB() : Scene{{0.0f}, nullptr} {
 }
@@ -87,7 +90,7 @@ void LevelB::initialise() {
                                            ));
 
     for (Enemy* enemy : mGameState.enemies) {
-        enemy->setColliderRadius(0.0f);
+        enemy->setColliderRadius(25.0f);
         for (int i = 0; i < 2500; ++i) {
             Bullet* newBullet = new Bullet({mOrigin.x, mOrigin.y - 450.0f},  // position
                                            {50.0f, 50.0f},                   // scale
@@ -99,6 +102,18 @@ void LevelB::initialise() {
             newBullet->setColliderRadius(newBullet->getColliderDimensions().x / 2.0f);
             enemy->addBullet(newBullet);
         }
+    }
+
+    for (int i = 0; i < 2500; ++i) {
+        Bullet* newBullet = new Bullet({mOrigin.x, mOrigin.y - 450.0f},  // position
+                                       {20.0f, 20.0f},                   // scale
+                                       "./assets/playerBullet.png",      // texture file address
+                                       NPC                               // entity type)
+        );
+        newBullet->setColliderDimensions(
+            {newBullet->getColliderDimensions().x - 8.0f, newBullet->getColliderDimensions().y - 8.0f});
+        newBullet->setColliderRadius(newBullet->getColliderDimensions().x / 2.0f);
+        mGameState.player->addBullet(newBullet);
     }
 
     /*
@@ -133,6 +148,7 @@ void LevelB::render() {
     ClearBackground(ColorFromHex(mBGColourHexCode));
 
     mGameState.player->render();
+    mGameState.player->renderBullets();
     for (Enemy* enemy : mGameState.enemies) {
         enemy->render();
     }

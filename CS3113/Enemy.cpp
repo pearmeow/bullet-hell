@@ -4,6 +4,7 @@
 
 #include <cmath>
 
+#include "Bullet.h"
 #include "Entity.h"
 #include "cs3113.h"
 
