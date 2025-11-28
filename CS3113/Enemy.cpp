@@ -5,8 +5,9 @@
 #include "Entity.h"
 #include "cs3113.h"
 
-float wavyPattern(float elapsedTime, float& angle, Entity* player);
-float fastPattern(float elapsedTime, float& angle, Entity* player);
+float wavyPattern(Entity* player, Bullet* bullet);
+float fastPattern(Entity* player, Bullet* bullet);
+float homingPattern(Entity* player, Bullet* bullet);
 
 Enemy::Enemy(Vector2 position, Vector2 scale, const char* textureFile, TextureType textureType,
              Vector2 spriteSheetDimensions, std::map<Direction, std::vector<int>> animationAtlas,
@@ -77,7 +78,7 @@ void Enemy::update(float deltaTime, Entity* player, Map* map, Entity* collidable
 }
 
 void Enemy::delayedAttack(float initAngle, int attacks, float delay,
-                          float (*pattern)(float elapsedTime, float& angle, Entity* player)) {
+                          float (*pattern)(Entity* player, Bullet* bullet)) {
     float angle = initAngle;
     float step = 360.0f / attacks;
     for (int count = 0; count < attacks; ++count) {
@@ -94,8 +95,7 @@ void Enemy::delayedAttack(float initAngle, int attacks, float delay,
     }
 }
 
-void Enemy::splitAttack(float initAngle, int attacks,
-                        float (*pattern)(float elapsedTime, float& angle, Entity* player)) {
+void Enemy::splitAttack(float initAngle, int attacks, float (*pattern)(Entity* player, Bullet* bullet)) {
     float angle = initAngle;
     float step = 360.0f / attacks;
     for (int count = 0; count < attacks; ++count) {
@@ -125,15 +125,15 @@ void Enemy::addBullet(Bullet* bullet) {
     mInactiveBullets.push(bullet);
 }
 
-float fastPattern(float elapsedTime, float& angle, Entity* player) {
+float fastPattern(Entity* player, Bullet* bullet) {
     return 90.0f;
 }
 
-float wavyPattern(float elapsedTime, float& angle, Entity* player) {
-    if (std::cos(elapsedTime * 75 * 3.14 / 180.0f) > 0) {
-        angle += 0.5f;
+float wavyPattern(Entity* player, Bullet* bullet) {
+    if (std::cos(bullet->getElapsedTime() * 75 * 3.14 / 180.0f) > 0) {
+        bullet->setAngle(bullet->getAngle() + 0.5f);
     } else {
-        angle -= 0.5f;
+        bullet->setAngle(bullet->getAngle() - 0.5f);
     }
     return 30.0f;
 }
