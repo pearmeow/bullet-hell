@@ -1,5 +1,7 @@
 #include "Enemy.h"
 
+#include <raylib.h>
+
 #include <cmath>
 
 #include "Entity.h"
@@ -51,7 +53,7 @@ void Enemy::update(float deltaTime, Entity* player, Map* map, Entity* collidable
     if (mTextureType == ATLAS) animate(deltaTime);
     resetMovement();
     for (auto bullet = mBullets.begin(); bullet != mBullets.end(); ++bullet) {
-        (*bullet)->update(deltaTime, nullptr, nullptr, nullptr, 0);
+        (*bullet)->update(deltaTime, player, nullptr, nullptr, 0);
         if (!(*bullet)->isActive() && (*bullet)->getDelay() <= 0.0f) {
             // bullet goes back to inactive
             mInactiveBullets.push(*bullet);
@@ -68,7 +70,7 @@ void Enemy::update(float deltaTime, Entity* player, Map* map, Entity* collidable
         if (std::sin(mElapsedTime * 100 * 3.14 / 180.0f) >= 0) {
             // one attack
             splitAttack(0, 10, fastPattern);
-            delayedAttack(-90, 40, 0.2f, fastPattern);
+            delayedAttack(-90, 40, 0.2f, wavyPattern);
         } else {
             // another attack
             splitAttack(0, 10, fastPattern);
@@ -130,10 +132,24 @@ float fastPattern(Entity* player, Bullet* bullet) {
 }
 
 float wavyPattern(Entity* player, Bullet* bullet) {
-    if (std::cos(bullet->getElapsedTime() * 75 * 3.14 / 180.0f) > 0) {
-        bullet->setAngle(bullet->getAngle() + 0.5f);
+    float angle = bullet->getAngle();
+    float elapsedTime = bullet->getElapsedTime();
+    if (std::cos(elapsedTime * 75 * 3.14 / 180.0f) > 0) {
+        bullet->setAngle(angle + 0.5f);
     } else {
-        bullet->setAngle(bullet->getAngle() - 0.5f);
+        bullet->setAngle(angle - 0.5f);
     }
     return 30.0f;
+}
+
+float homingPattern(Entity* player, Bullet* bullet) {
+    float angle = 0.0f;
+    Vector2 playerPos = player->getPosition();
+    Vector2 bulletPos = bullet->getPosition();
+    // do some angle calculations
+    Vector2 difference = {playerPos.x - bulletPos.x, playerPos.y - bulletPos.y};
+    angle = 180.0f / 3.1415 * atan2f(difference.y, difference.x) - 90.0f;
+    angle *= -1.0f;
+    bullet->setAngle(angle);
+    return 50.0f;
 }

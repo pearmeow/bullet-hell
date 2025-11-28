@@ -125,7 +125,7 @@ void LevelB::update(float deltaTime) {
     }
 
     for (Enemy* enemy : mGameState.enemies) {
-        enemy->update(deltaTime, nullptr, nullptr, nullptr, 0);
+        enemy->update(deltaTime, mGameState.player, nullptr, nullptr, 0);
     }
 }
 
