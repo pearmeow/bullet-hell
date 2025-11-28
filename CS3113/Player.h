@@ -33,6 +33,7 @@ public:
     void clearBullets();
     bool isColliding(Bullet* other) const;
     int getHealth() const;
+    void setHealth(int newHealth);
 };
 
 #endif

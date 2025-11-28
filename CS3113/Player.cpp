@@ -230,3 +230,7 @@ void Player::clearBullets() {
         mBullets.pop_front();
     }
 }
+
+void Player::setHealth(int newHealth) {
+    mHealth = newHealth;
+}

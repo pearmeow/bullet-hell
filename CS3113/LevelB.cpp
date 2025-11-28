@@ -81,6 +81,7 @@ void LevelB::initialise() {
 
     } else {
         mGameState.player->setPosition({mOrigin.x, mOrigin.y + 400.0f});
+        mGameState.player->setHealth(3);
         mGameState.player->clearBullets();
     }
 
