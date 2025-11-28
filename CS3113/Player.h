@@ -32,6 +32,9 @@ public:
     void attack();
     void clearBullets();
     bool isColliding(Bullet* other) const;
+    bool isInvincible() const;
+    void updateBullets(float deltaTime, std::vector<Enemy*> enemies, Map* map, Entity* collidableEntities,
+                       int collisionCheckCount);
     int getHealth() const;
     void setHealth(int newHealth);
 };

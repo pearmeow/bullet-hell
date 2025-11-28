@@ -63,17 +63,7 @@ void Player::update(float deltaTime, Entity* player, Map* map, std::vector<Enemy
         attack();
     }
 
-    for (auto bullet = mBullets.begin(); bullet != mBullets.end(); ++bullet) {
-        (*bullet)->update(deltaTime, enemies, nullptr, nullptr, 0);
-        if (!(*bullet)->isActive() && (*bullet)->getDelay() <= 0.0f) {
-            // bullet goes back to inactive
-            mInactiveBullets.push(*bullet);
-            // erase and go to the next one: erase returns the next iterator
-            bullet = mBullets.erase(bullet);
-            // go back one because iterator gets incremented at the end of the for loop
-            --bullet;
-        }
-    }
+    updateBullets(deltaTime, enemies, nullptr, nullptr, 0);
 
     if (mTextureType == ATLAS) animate(deltaTime);
     resetMovement();
@@ -178,7 +168,9 @@ bool Player::isColliding(Bullet* other) const {
 
 void Player::render() {
     Entity::render();
-    mHitbox->render();
+    if (isActive()) {
+        mHitbox->render();
+    }
 }
 
 int Player::getHealth() const {
@@ -233,4 +225,23 @@ void Player::clearBullets() {
 
 void Player::setHealth(int newHealth) {
     mHealth = newHealth;
+}
+
+bool Player::isInvincible() const {
+    return mIframes > 0.0f;
+}
+
+void Player::updateBullets(float deltaTime, std::vector<Enemy*> enemies, Map* map, Entity* collidableEntities,
+                           int collisionCheckCount) {
+    for (auto bullet = mBullets.begin(); bullet != mBullets.end(); ++bullet) {
+        (*bullet)->update(deltaTime, enemies, nullptr, nullptr, 0);
+        if (!(*bullet)->isActive() && (*bullet)->getDelay() <= 0.0f) {
+            // bullet goes back to inactive
+            mInactiveBullets.push(*bullet);
+            // erase and go to the next one: erase returns the next iterator
+            bullet = mBullets.erase(bullet);
+            // go back one because iterator gets incremented at the end of the for loop
+            --bullet;
+        }
+    }
 }

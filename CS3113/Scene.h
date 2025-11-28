@@ -14,6 +14,7 @@ struct GameState {
 
     std::vector<Enemy*> enemies;
     Camera2D camera;
+    float timeUntilNextScene = 5.0f;
 
     int nextSceneID;
 };

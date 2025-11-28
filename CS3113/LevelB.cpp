@@ -1,5 +1,9 @@
 #include "LevelB.h"
 
+#include <raylib.h>
+
+#include <cstdio>
+
 #include "Bullet.h"
 #include "Enemy.h"
 #include "Entity.h"
@@ -20,6 +24,12 @@ void LevelB::initialise() {
     mGameState.bgm = LoadMusicStream("./assets/dova_Mauve Rhopalocera_master.mp3");
     SetMusicVolume(mGameState.bgm, 0.33f);
     PlayMusicStream(mGameState.bgm);
+
+    mGameState.playerHitSound = LoadSound("./assets/synthetic_explosion_1.mp3");
+    SetSoundVolume(mGameState.playerHitSound, 0.5f);
+
+    mGameState.playerDeathSound = LoadSound("./assets/rumble.mp3");
+    SetSoundVolume(mGameState.playerDeathSound, 0.8f);
 
     /*
        ----------- MAP -----------
@@ -80,6 +90,7 @@ void LevelB::initialise() {
         }
 
     } else {
+        mGameState.player->activate();
         mGameState.player->setPosition({mOrigin.x, mOrigin.y + 400.0f});
         mGameState.player->setHealth(3);
         mGameState.player->clearBullets();
@@ -145,14 +156,22 @@ void LevelB::initialise() {
 void LevelB::update(float deltaTime) {
     UpdateMusicStream(mGameState.bgm);
 
+    int playerHealth = mGameState.player->getHealth();
+
     mGameState.player->update(deltaTime,          // delta time / fixed timestep
                               nullptr,            // player
                               mGameState.map,     // map
                               mGameState.enemies  // enemies (vector)
     );
 
-    if (mGameState.player->getHealth() <= 0) {
-        mGameState.nextSceneID = 3;
+    if (mGameState.player->getHealth() <= 0 && mGameState.player->isActive()) {
+        // play death sound
+        mGameState.player->deactivate();
+        PlaySound(mGameState.playerDeathSound);
+
+        // start delay, then switch later
+    } else if (mGameState.player->getHealth() < playerHealth) {
+        PlaySound(mGameState.playerHitSound);
     }
 
     bool enemiesAlive = false;
@@ -164,8 +183,22 @@ void LevelB::update(float deltaTime) {
             enemiesAlive = true;
         }
     }
-    if (enemiesAlive == false) {
-        mGameState.nextSceneID = 2;
+
+    if (!mGameState.player->isActive()) {
+        mGameState.player->updateBullets(deltaTime, mGameState.enemies, nullptr, nullptr, 0);
+    }
+
+    // detect win/loss
+    if (enemiesAlive == false || !mGameState.player->isActive()) {
+        mGameState.timeUntilNextScene -= deltaTime;
+        if (mGameState.timeUntilNextScene <= 0) {
+            mGameState.timeUntilNextScene = 5.0f;
+            if (enemiesAlive == false && !mGameState.player->isActive()) {
+                mGameState.nextSceneID = 3;
+            } else if (mGameState.player->isActive()) {
+                mGameState.nextSceneID = 2;
+            }
+        }
     }
 }
 
