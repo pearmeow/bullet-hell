@@ -15,6 +15,7 @@ private:
     float mAttackDelay = 0.0f;
     float mAttackSpeed = 2.0f;
     float mElapsedTime = 0.0f;
+    int mHealth = 10;
     int mAttacks = 25;
 
 public:
@@ -30,6 +31,10 @@ public:
                        float (*pattern)(Entity* player, Bullet* bullet));
     std::list<Bullet*>& getBullets();
     void addBullet(Bullet* bullet);
+    void setHealth(int newHealth);
+    int getHealth() const;
+    void updateBullets(float deltaTime, Entity* player, Map* map, Entity* collidableEntities,
+                       int collisionCheckCount);
 };
 
 #endif

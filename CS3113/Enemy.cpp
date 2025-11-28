@@ -32,6 +32,9 @@ Enemy::~Enemy() {
 
 void Enemy::update(float deltaTime, Entity* player, Map* map, Entity* collidableEntities,
                    int collisionCheckCount) {
+    if (mHealth <= 0) {
+        deactivate();
+    }
     if (mEntityStatus == INACTIVE) {
         return;
     }
@@ -53,17 +56,7 @@ void Enemy::update(float deltaTime, Entity* player, Map* map, Entity* collidable
 
     if (mTextureType == ATLAS) animate(deltaTime);
     resetMovement();
-    for (auto bullet = mBullets.begin(); bullet != mBullets.end(); ++bullet) {
-        (*bullet)->update(deltaTime, player, nullptr, nullptr, 0);
-        if (!(*bullet)->isActive() && (*bullet)->getDelay() <= 0.0f) {
-            // bullet goes back to inactive
-            mInactiveBullets.push(*bullet);
-            // erase and go to the next one: erase returns the next iterator
-            bullet = mBullets.erase(bullet);
-            // go back one because iterator gets incremented at the end of the for loop
-            --bullet;
-        }
-    }
+    updateBullets(deltaTime, player, map, collidableEntities, collisionCheckCount);
     mAttackDelay += deltaTime;
     if (mAttackDelay >= mAttackSpeed) {
         // conditional based on mElapsedTime to switch up attacks
@@ -157,4 +150,26 @@ float homingPattern(Entity* player, Bullet* bullet) {
     angle *= -1.0f;
     bullet->setAngle(angle);
     return 50.0f;
+}
+
+void Enemy::setHealth(int newHealth) {
+    mHealth = newHealth;
+}
+int Enemy::getHealth() const {
+    return mHealth;
+}
+
+void Enemy::updateBullets(float deltaTime, Entity* player, Map* map, Entity* collidableEntities,
+                          int collisionCheckCount) {
+    for (auto bullet = mBullets.begin(); bullet != mBullets.end(); ++bullet) {
+        (*bullet)->update(deltaTime, player, nullptr, nullptr, 0);
+        if (!(*bullet)->isActive() && (*bullet)->getDelay() <= 0.0f) {
+            // bullet goes back to inactive
+            mInactiveBullets.push(*bullet);
+            // erase and go to the next one: erase returns the next iterator
+            bullet = mBullets.erase(bullet);
+            // go back one because iterator gets incremented at the end of the for loop
+            --bullet;
+        }
+    }
 }

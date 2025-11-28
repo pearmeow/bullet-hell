@@ -59,7 +59,7 @@ void Bullet::update(float deltaTime, std::vector<Enemy*>& enemies, Map* map, Ent
     for (Enemy* enemy : enemies) {
         if (isCollidingEnemy(enemy)) {
             // enemy loses health
-            printf("colliding with enemy\n");
+            enemy->setHealth(enemy->getHealth() - 1);
             deactivate();
         }
     }
