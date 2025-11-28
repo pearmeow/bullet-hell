@@ -70,11 +70,12 @@ void Enemy::update(float deltaTime, Entity* player, Map* map, Entity* collidable
         if (std::sin(mElapsedTime * 100 * 3.14 / 180.0f) >= 0) {
             // one attack
             splitAttack(0, 10, fastPattern);
-            delayedAttack(-90, 40, 0.2f, wavyPattern);
+            delayedAttack(-90, 40, 0.2f, fastPattern);
         } else {
             // another attack
             splitAttack(0, 10, fastPattern);
             splitAttack(mElapsedTime * 100, 10, wavyPattern);
+            splitAttack(0, 10, homingPattern);
         }
     }
 }
@@ -143,6 +144,9 @@ float wavyPattern(Entity* player, Bullet* bullet) {
 }
 
 float homingPattern(Entity* player, Bullet* bullet) {
+    if (bullet->getElapsedTime() > 5.0f) {
+        return 50.0f;
+    }
     float angle = 0.0f;
     Vector2 playerPos = player->getPosition();
     Vector2 bulletPos = bullet->getPosition();
