@@ -12,10 +12,6 @@ LevelD::~LevelD() {
 void LevelD::initialise() {
     mGameState.nextSceneID = 0;
 
-    mGameState.bgm = LoadMusicStream("");
-    SetMusicVolume(mGameState.bgm, 0.33f);
-    PlayMusicStream(mGameState.bgm);
-
     /*
        ----------- CAMERA -----------
     */
@@ -27,7 +23,6 @@ void LevelD::initialise() {
 }
 
 void LevelD::update(float deltaTime) {
-    UpdateMusicStream(mGameState.bgm);
 }
 
 void LevelD::render() {
@@ -37,5 +32,4 @@ void LevelD::render() {
 }
 
 void LevelD::shutdown() {
-    UnloadMusicStream(mGameState.bgm);
 }

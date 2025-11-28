@@ -12,10 +12,6 @@ LevelA::~LevelA() {
 void LevelA::initialise() {
     mGameState.nextSceneID = 0;
 
-    mGameState.bgm = LoadMusicStream("");
-    SetMusicVolume(mGameState.bgm, 0.33f);
-    PlayMusicStream(mGameState.bgm);
-
     /*
        ----------- CAMERA -----------
     */
@@ -27,7 +23,6 @@ void LevelA::initialise() {
 }
 
 void LevelA::update(float deltaTime) {
-    UpdateMusicStream(mGameState.bgm);
 }
 
 void LevelA::render() {
@@ -40,5 +35,4 @@ void LevelA::render() {
 }
 
 void LevelA::shutdown() {
-    UnloadMusicStream(mGameState.bgm);
 }

@@ -8,6 +8,9 @@ struct GameState {
     Player* player = nullptr;
     Map* map = nullptr;
     Music bgm;
+    Sound playerHitSound;
+    Sound enemyDeathSound;
+    Sound playerDeathSound;
 
     std::vector<Enemy*> enemies;
     Camera2D camera;

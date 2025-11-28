@@ -12,10 +12,6 @@ LevelC::~LevelC() {
 void LevelC::initialise() {
     mGameState.nextSceneID = 0;
 
-    mGameState.bgm = LoadMusicStream("");
-    SetMusicVolume(mGameState.bgm, 0.33f);
-    PlayMusicStream(mGameState.bgm);
-
     /*
        ----------- CAMERA -----------
     */
@@ -27,15 +23,13 @@ void LevelC::initialise() {
 }
 
 void LevelC::update(float deltaTime) {
-    UpdateMusicStream(mGameState.bgm);
 }
 
 void LevelC::render() {
     ClearBackground(ColorFromHex(mBGColourHexCode));
-    DrawText("GGEZ", mOrigin.x - 100.0f, mOrigin.y - 100.0f, 30, WHITE);
+    DrawText("GGEZ", mOrigin.x - 20.0f, mOrigin.y - 100.0f, 30, WHITE);
     DrawText("Press ENTER to play again", mOrigin.x - 170.0f, mOrigin.y + 400.0f, 30, WHITE);
 }
 
 void LevelC::shutdown() {
-    UnloadMusicStream(mGameState.bgm);
 }

@@ -17,7 +17,7 @@ LevelB::~LevelB() {
 void LevelB::initialise() {
     mGameState.nextSceneID = 0;
 
-    mGameState.bgm = LoadMusicStream("../assets/dova_Mauve Rhopalocera_master.mp3");
+    mGameState.bgm = LoadMusicStream("./assets/dova_Mauve Rhopalocera_master.mp3");
     SetMusicVolume(mGameState.bgm, 0.33f);
     PlayMusicStream(mGameState.bgm);
 
