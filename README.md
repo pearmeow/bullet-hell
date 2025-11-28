@@ -38,5 +38,5 @@ Requirement 5: Shader Logic (10%)
 Requirement 6: Audio (10%)
 --------------------------
 
-- [ ] You must have at least 1 looping background music for each level. 
-- [ ] There must be at least 3 sound effects (walking, player being defeated, shooting, etc.)
+- [x] You must have at least 1 looping background music for each level. 
+- [x] There must be at least 3 sound effects (walking, player being defeated, shooting, etc.)
