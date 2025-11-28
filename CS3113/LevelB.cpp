@@ -22,14 +22,17 @@ void LevelB::initialise() {
     mGameState.nextSceneID = 0;
 
     mGameState.bgm = LoadMusicStream("./assets/dova_Mauve Rhopalocera_master.mp3");
-    SetMusicVolume(mGameState.bgm, 0.33f);
+    SetMusicVolume(mGameState.bgm, 0.25f);
     PlayMusicStream(mGameState.bgm);
 
     mGameState.playerHitSound = LoadSound("./assets/synthetic_explosion_1.mp3");
-    SetSoundVolume(mGameState.playerHitSound, 0.5f);
+    SetSoundVolume(mGameState.playerHitSound, 0.6f);
 
     mGameState.playerDeathSound = LoadSound("./assets/rumble.mp3");
     SetSoundVolume(mGameState.playerDeathSound, 0.8f);
+
+    mGameState.enemyDeathSound = LoadSound("./assets/Multi Explosion.mp3");
+    SetSoundVolume(mGameState.enemyDeathSound, 0.8f);
 
     /*
        ----------- MAP -----------
@@ -176,7 +179,11 @@ void LevelB::update(float deltaTime) {
 
     bool enemiesAlive = false;
     for (Enemy* enemy : mGameState.enemies) {
+        bool wasAlive = enemy->isActive();
         enemy->update(deltaTime, mGameState.player, nullptr, nullptr, 0);
+        if (wasAlive && !enemy->isActive()) {
+            PlaySound(mGameState.enemyDeathSound);
+        }
         if (!enemy->isActive()) {
             enemy->updateBullets(deltaTime, mGameState.player, nullptr, nullptr, 0);
         } else {
@@ -193,7 +200,7 @@ void LevelB::update(float deltaTime) {
         mGameState.timeUntilNextScene -= deltaTime;
         if (mGameState.timeUntilNextScene <= 0) {
             mGameState.timeUntilNextScene = 5.0f;
-            if (enemiesAlive == false && !mGameState.player->isActive()) {
+            if (!mGameState.player->isActive()) {
                 mGameState.nextSceneID = 3;
             } else if (mGameState.player->isActive()) {
                 mGameState.nextSceneID = 2;
