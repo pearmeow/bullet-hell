@@ -242,10 +242,7 @@ void LevelB::shutdown() {
 
 float eightMovePattern(Entity* player, Enemy* enemy) {
     float elapsedTime = enemy->getElapsedTime();
-    if (elapsedTime > 1.0f) {
-        enemy->setAngle(90.0f);
-    } else {
-        enemy->setAngle(270.0f);
-    }
+    float angle = 180 * std::cos(5 * elapsedTime * 3.1415 / 180.0f);
+    printf("%f\n", angle);
     return 5.0f;
 }

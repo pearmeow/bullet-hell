@@ -47,7 +47,7 @@ void Enemy::update(float deltaTime, Entity* player, Map* map, Entity* collidable
     mElapsedTime += deltaTime;
     resetColliderFlags();
     mSpeed = mMovePattern(player, this);
-    mPosition.y += std::cos(mAngle * (3.1415f / 180.0f)) * mSpeed * deltaTime;
+    mPosition.y += -1.0f * std::cos(mAngle * (3.1415f / 180.0f)) * mSpeed * deltaTime;
     mPosition.x += std::sin(mAngle * (3.1415f / 180.0f)) * mSpeed * deltaTime;
 
     mPosition.y += mVelocity.y * deltaTime;
