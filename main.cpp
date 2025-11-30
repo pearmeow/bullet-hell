@@ -166,9 +166,10 @@ void render() {
 }
 
 void shutdown() {
-    for (size_t i = 0; i < gLevels.size(); ++i) {
-        delete gLevels[i];
+    for (Scene* scene : gLevels) {
+        delete scene;
     }
+    gLevels.clear();
     delete gEffects;
     CloseAudioDevice();
     CloseWindow();

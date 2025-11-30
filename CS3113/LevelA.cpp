@@ -28,10 +28,11 @@ void LevelA::update(float deltaTime) {
 void LevelA::render() {
     ClearBackground(ColorFromHex(mBGColourHexCode));
     DrawText("Touhou Clone", mOrigin.x - 100.0f, mOrigin.y - 300.0f, 30, WHITE);
-    DrawText("WASD to move", mOrigin.x - 100.0f, mOrigin.y + 300.0f, 30, WHITE);
-    DrawText("Press ENTER to start", mOrigin.x - 170.0f, mOrigin.y + 400.0f, 30, WHITE);
-
-    // TODO: Make image in middle possibly if time allows
+    DrawText("WASD to move", mOrigin.x - 100.0f, mOrigin.y + 180.0f, 30, WHITE);
+    DrawText("Q to bomb", mOrigin.x - 80.0f, mOrigin.y + 210.0f, 30, WHITE);
+    DrawText("Shift to half speed", mOrigin.x - 140.0f, mOrigin.y + 240.0f, 30, WHITE);
+    DrawText("Press ENTER to start", mOrigin.x - 170.0f, mOrigin.y + 270.0f, 30, WHITE);
+    DrawText("The blue circle is your hitbox", mOrigin.x - 200.0f, mOrigin.y + 300.0f, 30, WHITE);
 }
 
 void LevelA::shutdown() {

@@ -235,6 +235,7 @@ void LevelB::shutdown() {
     for (Enemy* enemy : mGameState.enemies) {
         delete enemy;
     }
+    mGameState.enemies.clear();
 
     UnloadMusicStream(mGameState.bgm);
 }
