@@ -12,6 +12,7 @@ class Enemy : public Entity {
 private:
     std::list<Bullet*> mBullets;
     std::queue<Bullet*> mInactiveBullets;
+    float (*mMovePattern)(Entity* player, Enemy* enemy);
     float mAttackDelay = 0.0f;
     float mAttackSpeed = 2.0f;
     float mElapsedTime = 0.0f;
@@ -37,7 +38,9 @@ public:
                        int collisionCheckCount);
     void clearBullets();
     void setElapsedTime(float newElapsedTime);
+    float getElapsedTime() const;
     void setAttackDelay(float newAttackDelay);
+    void setMovePattern(float (*pattern)(Entity* player, Enemy* enemy));
 };
 
 #endif

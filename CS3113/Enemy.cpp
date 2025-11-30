@@ -12,10 +12,13 @@ float wavyPattern(Entity* player, Bullet* bullet);
 float fastPattern(Entity* player, Bullet* bullet);
 float homingPattern(Entity* player, Bullet* bullet);
 
+float stillMovePattern(Entity* player, Enemy* enemy);
+
 Enemy::Enemy(Vector2 position, Vector2 scale, const char* textureFile, TextureType textureType,
              Vector2 spriteSheetDimensions, std::map<Direction, std::vector<int>> animationAtlas,
              EntityType entityType)
-    : Entity(position, scale, textureFile, textureType, spriteSheetDimensions, animationAtlas, entityType) {
+    : Entity(position, scale, textureFile, textureType, spriteSheetDimensions, animationAtlas, entityType),
+      mMovePattern(stillMovePattern) {
     mAngle = 180.0f;
 }
 
@@ -43,8 +46,9 @@ void Enemy::update(float deltaTime, Entity* player, Map* map, Entity* collidable
     }
     mElapsedTime += deltaTime;
     resetColliderFlags();
-    mVelocity.x = mMovement.x * mSpeed;
-    mVelocity.y = mMovement.y * mSpeed;
+    mSpeed = mMovePattern(player, this);
+    mPosition.y += std::cos(mAngle * (3.1415f / 180.0f)) * mSpeed * deltaTime;
+    mPosition.x += std::sin(mAngle * (3.1415f / 180.0f)) * mSpeed * deltaTime;
 
     mPosition.y += mVelocity.y * deltaTime;
     checkCollisionY(collidableEntities, collisionCheckCount);
@@ -54,6 +58,10 @@ void Enemy::update(float deltaTime, Entity* player, Map* map, Entity* collidable
     checkCollisionX(collidableEntities, collisionCheckCount);
     checkCollisionX(map);
 
+    // just to make the animation play because it's the same for all directions
+    if (mSpeed > 0) {
+        mDirection = DOWN;
+    }
     if (mTextureType == ATLAS) animate(deltaTime);
     resetMovement();
     updateBullets(deltaTime, player, map, collidableEntities, collisionCheckCount);
@@ -188,4 +196,16 @@ void Enemy::clearBullets() {
         mInactiveBullets.push(mBullets.front());
         mBullets.pop_front();
     }
+}
+
+float Enemy::getElapsedTime() const {
+    return mElapsedTime;
+}
+
+void Enemy::setMovePattern(float (*pattern)(Entity* player, Enemy* enemy)) {
+    mMovePattern = pattern;
+}
+
+float stillMovePattern(Entity* player, Enemy* enemy) {
+    return 0.0f;
 }

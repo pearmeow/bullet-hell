@@ -7,6 +7,8 @@
 #include "Entity.h"
 #include "Player.h"
 
+float eightMovePattern(Entity* player, Enemy* enemy);
+
 LevelB::LevelB() : Scene{{0.0f}, nullptr} {
 }
 LevelB::LevelB(Vector2 origin, const char* bgHexCode) : Scene{origin, bgHexCode} {
@@ -135,6 +137,7 @@ void LevelB::initialise() {
                 enemy->addBullet(newBullet);
             }
         }
+        mGameState.enemies[0]->setMovePattern(eightMovePattern);
     } else {
         for (Enemy* enemy : mGameState.enemies) {
             enemy->setElapsedTime(0.0f);
@@ -143,6 +146,7 @@ void LevelB::initialise() {
             enemy->activate();
             enemy->clearBullets();
         }
+        mGameState.enemies[0]->setMovePattern(eightMovePattern);
     }
 
     /*
@@ -233,4 +237,14 @@ void LevelB::shutdown() {
     }
 
     UnloadMusicStream(mGameState.bgm);
+}
+
+float eightMovePattern(Entity* player, Enemy* enemy) {
+    float elapsedTime = enemy->getElapsedTime();
+    if (elapsedTime > 1.0f) {
+        enemy->setAngle(90.0f);
+    } else {
+        enemy->setAngle(270.0f);
+    }
+    return 5.0f;
 }
