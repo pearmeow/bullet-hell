@@ -32,8 +32,8 @@ Requirement 4: Players Can Win and Lose (10%)
 Requirement 5: Shader Logic (10%)
 ---------------------------------
 
-- [ ] Use at least one logic-based (i.e. if-statements) shader effect.
-- [ ] It can be any of the ones we talked about in class (or of your own design), but it must contribute to the overall theme and experience of your game (i.e. don't just make the screen red for the sake of it).
+- [x] Use at least one logic-based (i.e. if-statements) shader effect.
+- [x] It can be any of the ones we talked about in class (or of your own design), but it must contribute to the overall theme and experience of your game (i.e. don't just make the screen red for the sake of it).
 
 Requirement 6: Audio (10%)
 --------------------------
