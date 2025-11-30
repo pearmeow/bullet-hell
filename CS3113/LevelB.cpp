@@ -2,8 +2,6 @@
 
 #include <raylib.h>
 
-#include <cstdio>
-
 #include "Bullet.h"
 #include "Enemy.h"
 #include "Entity.h"
@@ -93,6 +91,7 @@ void LevelB::initialise() {
         }
 
     } else {
+        mGameState.player->setBombs(2);
         mGameState.player->activate();
         mGameState.player->setPosition({mOrigin.x, mOrigin.y + 400.0f});
         mGameState.player->setHealth(3);
