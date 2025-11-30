@@ -162,6 +162,7 @@ void LevelB::update(float deltaTime) {
         for (Enemy* enemy : mGameState.enemies) {
             enemy->clearBullets();
         }
+        PlaySound(mGameState.playerDeathSound);
         mGameState.player->setBombing(false);
     }
 
