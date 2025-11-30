@@ -159,6 +159,13 @@ void LevelB::initialise() {
 void LevelB::update(float deltaTime) {
     UpdateMusicStream(mGameState.bgm);
 
+    if (mGameState.player->isBombing()) {
+        for (Enemy* enemy : mGameState.enemies) {
+            enemy->clearBullets();
+        }
+        mGameState.player->setBombing(false);
+    }
+
     int playerHealth = mGameState.player->getHealth();
 
     mGameState.player->update(deltaTime,          // delta time / fixed timestep

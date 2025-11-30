@@ -7,6 +7,8 @@
 class Player : public Entity {
 private:
     int mHealth = 3;
+    int mBombs = 2;
+    bool mIsBombing = false;
     float mIframes = 0.0f;
     bool mShifted = false;
     float mAttackDelay = 0.0f;
@@ -31,6 +33,10 @@ public:
     void addBullet(Bullet* bullet);
     void attack();
     void clearBullets();
+    bool bomb();
+    void setBombs(int bombs);
+    bool isBombing() const;
+    void setBombing(bool isBombing);
     bool isColliding(Bullet* other) const;
     bool isInvincible() const;
     void updateBullets(float deltaTime, std::vector<Enemy*> enemies, Map* map, Entity* collidableEntities,

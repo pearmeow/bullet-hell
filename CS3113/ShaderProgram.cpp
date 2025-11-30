@@ -33,7 +33,6 @@ void ShaderProgram::end() {
 
 void ShaderProgram::setVector2(const std::string& name, const Vector2& value) {
     if (!mIsLoaded) return;
-
     int locationID = GetShaderLocation(mShader, name.c_str());
     if (locationID != NOT_LOADED) SetShaderValue(mShader, locationID, &value, SHADER_UNIFORM_VEC2);
 }

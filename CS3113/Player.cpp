@@ -245,3 +245,24 @@ void Player::updateBullets(float deltaTime, std::vector<Enemy*> enemies, Map* ma
         }
     }
 }
+
+bool Player::bomb() {
+    if (mBombs <= 0) {
+        return false;
+    }
+    --mBombs;
+    mIsBombing = true;
+    return true;
+}
+
+bool Player::isBombing() const {
+    return mIsBombing;
+}
+
+void Player::setBombing(bool isBombing) {
+    mIsBombing = isBombing;
+}
+
+void Player::setBombs(int bombs) {
+    mBombs = bombs;
+}

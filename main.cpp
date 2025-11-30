@@ -15,6 +15,7 @@
 #include "CS3113/LevelC.h"
 #include "CS3113/LevelD.h"
 #include "CS3113/Scene.h"
+#include "CS3113/ShaderProgram.h"
 #include "CS3113/cs3113.h"
 
 // Global Constants
@@ -27,6 +28,7 @@ constexpr float FIXED_TIMESTEP = 1.0f / 60.0f;
 // Global Variables
 AppStatus gAppStatus = RUNNING;
 float gPreviousTicks = 0.0f, gTimeAccumulator = 0.0f;
+float gInvertTicks = 0.5f;
 
 std::vector<Scene*> gLevels;
 Scene* gCurrentScene;
@@ -35,6 +37,10 @@ LevelA* gLevelA;
 LevelB* gLevelB;
 LevelC* gLevelC;
 LevelD* gLevelD;
+
+ShaderProgram gShader;
+int gInvert = 0;
+Effects* gEffects = nullptr;
 
 // Function Declarations
 void switchToScene(Scene* scene);
@@ -52,6 +58,10 @@ void switchToScene(Scene* scene) {
 void initialise() {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Scenes");
     InitAudioDevice();
+
+    gShader.load("./shaders/vertex.glsl", "./shaders/fragment.glsl");
+    gEffects = new Effects(ORIGIN, SCREEN_WIDTH * 1.5f, SCREEN_HEIGHT * 1.5f);
+
     gLevelA = new LevelA(ORIGIN, "#000000");
     gLevelB = new LevelB(ORIGIN, "#000000");
     gLevelC = new LevelC(ORIGIN, "#000000");
@@ -104,7 +114,15 @@ void processInput() {
         }
     }
 
-    if (IsKeyPressed(KEY_Q) || WindowShouldClose()) gAppStatus = TERMINATED;
+    if (IsKeyPressed(KEY_Q) && gCurrentScene->getState().player) {
+        if (gCurrentScene->getState().player->bomb()) {
+            gInvert = 1;
+        }
+    } else {
+        gInvert = 0;
+    }
+
+    if (WindowShouldClose()) gAppStatus = TERMINATED;
 }
 
 void update() {
@@ -121,6 +139,14 @@ void update() {
 
     while (deltaTime >= FIXED_TIMESTEP) {
         gCurrentScene->update(FIXED_TIMESTEP);
+        if (gInvert || gInvertTicks != 0.5f) {
+            gInvert = 1;
+            gInvertTicks -= FIXED_TIMESTEP;
+        }
+        if (gInvertTicks <= 0) {
+            gInvert = 0;
+            gInvertTicks = 0.5f;
+        }
         deltaTime -= FIXED_TIMESTEP;
     }
 }
@@ -129,13 +155,21 @@ void render() {
     BeginDrawing();
     BeginMode2D(gCurrentScene->getState().camera);
 
+    gShader.begin();
+    // do some shader stuff
+    gShader.setInt("invert", gInvert);
     gCurrentScene->render();
+    gShader.end();
 
     EndMode2D();
     EndDrawing();
 }
 
 void shutdown() {
+    for (size_t i = 0; i < gLevels.size(); ++i) {
+        delete gLevels[i];
+    }
+    delete gEffects;
     CloseAudioDevice();
     CloseWindow();
 }
