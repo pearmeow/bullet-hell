@@ -1,7 +1,5 @@
 #include "Bullet.h"
 
-#include <cstdio>
-
 #include "Enemy.h"
 
 float defaultPattern(Entity* player, Bullet* bullet) {
@@ -19,6 +17,7 @@ Bullet::Bullet(Vector2 position, Vector2 scale, const char* textureFile, Texture
       mPattern(pattern) {
 }
 
+// for enemy bullets
 void Bullet::update(float deltaTime, Entity* player, Map* map, Entity* collidableEntities,
                     int collisionCheckCount) {
     mDelay -= deltaTime;
@@ -40,6 +39,7 @@ void Bullet::update(float deltaTime, Entity* player, Map* map, Entity* collidabl
     }
 }
 
+// for player bullets
 void Bullet::update(float deltaTime, std::vector<Enemy*>& enemies, Map* map, Entity* collidableEntities,
                     int collisionCheckCount) {
     mDelay -= deltaTime;
