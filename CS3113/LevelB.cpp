@@ -176,7 +176,7 @@ void LevelB::update(float deltaTime) {
     mGameState.player->update(deltaTime,       // delta time / fixed timestep
                               nullptr,         // player
                               mGameState.map,  // map
-                              nullptr, 0);
+                              mGameState.enemies);
 
     if (mGameState.player->getHealth() <= 0 && mGameState.player->isActive()) {
         // play death sound

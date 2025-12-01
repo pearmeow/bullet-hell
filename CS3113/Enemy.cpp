@@ -74,22 +74,23 @@ void Enemy::update(float deltaTime, Entity* player, Map* map, Entity* collidable
     if (mAttackDelay >= mAttackSpeed) {
         // conditional based on mElapsedTime to switch up attacks
         mAttackDelay = 0.0f;
-        if (mElapsedTime <= 10.0f) {
+        if (mElapsedTime <= 20.0f) {
             delayedAttack(-90, 40, 0.2f, 360.0f / 40, fastPattern);
-            splitAttack(0, 10, fastPattern);
-            splitAttack(mElapsedTime * 100, 10, wavyPattern);
+            splitAttack(0, 15, wavyPattern);
             splitAttack(0, 10, homingPattern);
-        } else if (mElapsedTime <= 20.0f) {
+        } else if (mElapsedTime <= 30.0f) {
             mAttackSpeed = 1.3f;
             splitAttack(mElapsedTime * 5, 30, fastPattern);
             delayedAttack(0.0f, 1, 0, 360.0f / 1.0f, trackingPattern);
-        } else if (mElapsedTime <= 30.0f) {
+        } else if (mElapsedTime <= 40.0f) {
             mAttackSpeed = 1.0f;
             splitAttack(mElapsedTime * 3, 45, fastPattern);
-            delayedAttack(-90.0f, 5, 0.2f, 360.0f / 5.0f, trackingPattern);
-        } else if (mElapsedTime <= 40.0f) {
+            delayedAttack(-90.0f, 3, 0.3f, 360.0f / 5.0f, trackingPattern);
+        } else if (mElapsedTime <= 50.0f) {
             delayedAttack(-87.5f, 35, 0.2f, 5.5f, fastPattern);
-        } else {
+        } else if (mElapsedTime <= 58.0f) {
+        } else if (mElapsedTime <= 70.0f) {
+            delayedAttack(0, 10, 0.3f, 0, trackingPattern);
         }
     }
 }
