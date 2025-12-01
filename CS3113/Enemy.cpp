@@ -106,7 +106,7 @@ void Enemy::update(float deltaTime, Entity* player, Map* map, Entity* collidable
             splitAttack(0.0f, 9, rotatingPattern);
             splitAttack(0.0f, 9, reverseRotatingPattern);
             delayedAttack(-87.5f, 35, 0.2f, 5.5f, fastPattern);
-        } else if (mElapsedTime <= 130.0f) {
+        } else if (mElapsedTime <= 140.0f) {
             // better kill him quick
             mAttackSpeed = 0.2f;
             delayedAttack(-90, 40, 0.2f, 360.0f / 40, fastPattern);
@@ -179,7 +179,7 @@ float wavyPattern(Entity* player, Bullet* bullet) {
     } else {
         bullet->setAngle(angle - 0.5f);
     }
-    return 30.0f;
+    return 60.0f;
 }
 
 float homingPattern(Entity* player, Bullet* bullet) {
