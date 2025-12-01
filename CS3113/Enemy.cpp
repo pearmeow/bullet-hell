@@ -90,7 +90,6 @@ void Enemy::update(float deltaTime, Entity* player, Map* map, Entity* collidable
         } else if (mElapsedTime <= 40.0f) {
             delayedAttack(-87.5f, 35, 0.2f, 5.5f, fastPattern);
         } else {
-            mElapsedTime = 0.0f;
         }
     }
 }
