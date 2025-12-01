@@ -114,7 +114,7 @@ void processInput() {
         }
     }
 
-    if (IsKeyPressed(KEY_Q) && gCurrentScene->getState().player) {
+    if (IsKeyPressed(KEY_Q) && gCurrentScene->getState().player != nullptr) {
         if (gCurrentScene->getState().player->bomb()) {
             gInvert = 1;
         }

@@ -231,18 +231,22 @@ void LevelB::render() {
 }
 
 void LevelB::shutdown() {
+    // no point in deleting uninitialized stuff
+    if (mGameState.player == nullptr) {
+        return;
+    }
     delete mGameState.player;
+    delete mGameState.map;
     for (Enemy* enemy : mGameState.enemies) {
         delete enemy;
     }
     mGameState.enemies.clear();
-
     UnloadMusicStream(mGameState.bgm);
 }
 
 float eightMovePattern(Entity* player, Enemy* enemy) {
     float elapsedTime = enemy->getElapsedTime();
     float angle = 180 * std::cos(5 * elapsedTime * 3.1415 / 180.0f);
-    printf("%f\n", angle);
+    enemy->setAngle(angle);
     return 5.0f;
 }

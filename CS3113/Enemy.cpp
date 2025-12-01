@@ -11,6 +11,8 @@
 float wavyPattern(Entity* player, Bullet* bullet);
 float fastPattern(Entity* player, Bullet* bullet);
 float homingPattern(Entity* player, Bullet* bullet);
+float straightPattern(Entity* player, Bullet* bullet);
+float trackingPattern(Entity* player, Bullet* bullet);
 
 float stillMovePattern(Entity* player, Enemy* enemy);
 
@@ -69,15 +71,26 @@ void Enemy::update(float deltaTime, Entity* player, Map* map, Entity* collidable
     if (mAttackDelay >= mAttackSpeed) {
         // conditional based on mElapsedTime to switch up attacks
         mAttackDelay = 0.0f;
-        if (std::sin(mElapsedTime * 100 * 3.14 / 180.0f) >= 0) {
-            // one attack
-            splitAttack(0, 10, fastPattern);
-            delayedAttack(-90, 40, 0.2f, fastPattern);
-        } else {
-            // another attack
-            splitAttack(0, 10, fastPattern);
-            splitAttack(mElapsedTime * 100, 10, wavyPattern);
-            splitAttack(0, 10, homingPattern);
+        if (mElapsedTime <= 10.0f) {
+            if (std::sin(mElapsedTime * 100 * 3.14 / 180.0f) >= 0) {
+                // one attack
+                splitAttack(0, 10, fastPattern);
+                delayedAttack(-90, 40, 0.2f, fastPattern);
+            } else {
+                // another attack
+                splitAttack(0, 10, fastPattern);
+                splitAttack(mElapsedTime * 100, 10, wavyPattern);
+                splitAttack(0, 10, homingPattern);
+            }
+        } else if (mElapsedTime <= 30.0f) {
+            mAttackSpeed = 1.3f;
+            splitAttack(mElapsedTime * 5, 30, straightPattern);
+            delayedAttack(0.0f, 1, 0, trackingPattern);
+        } else if (mElapsedTime <= 60.0f) {
+            mAttackSpeed = 1.0f;
+            splitAttack(mElapsedTime * 3, 45, fastPattern);
+            delayedAttack(-90.0f, 10, 0.2f, trackingPattern);
+        } else if (mElapsedTime <= 120.0f) {
         }
     }
 }
@@ -208,4 +221,23 @@ void Enemy::setMovePattern(float (*pattern)(Entity* player, Enemy* enemy)) {
 
 float stillMovePattern(Entity* player, Enemy* enemy) {
     return 0.0f;
+}
+
+float straightPattern(Entity* player, Bullet* bullet) {
+    return 90.0f;
+}
+
+float trackingPattern(Entity* player, Bullet* bullet) {
+    if (bullet->getElapsedTime() > 0.1f) {
+        return 190.0f;
+    }
+    float angle = 0.0f;
+    Vector2 playerPos = player->getPosition();
+    Vector2 bulletPos = bullet->getPosition();
+    // do some angle calculations
+    Vector2 difference = {playerPos.x - bulletPos.x, playerPos.y - bulletPos.y};
+    angle = 180.0f / 3.1415 * atan2f(difference.y, difference.x) - 90.0f;
+    angle *= -1.0f;
+    bullet->setAngle(angle);
+    return 190.0f;
 }
