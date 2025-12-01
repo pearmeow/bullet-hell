@@ -142,7 +142,7 @@ void LevelB::initialise() {
         for (Enemy* enemy : mGameState.enemies) {
             enemy->setElapsedTime(0.0f);
             enemy->setAttackDelay(0.0f);
-            enemy->setHealth(200);
+            enemy->setHealth(300);
             enemy->activate();
             enemy->clearBullets();
         }

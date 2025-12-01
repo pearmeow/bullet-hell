@@ -16,7 +16,7 @@ private:
     float mAttackDelay = 0.0f;
     float mAttackSpeed = 2.0f;
     float mElapsedTime = 0.0f;
-    int mHealth = 250;
+    int mHealth = 300;
     int mAttacks = 25;
 
 public:
