@@ -46,6 +46,9 @@ void Enemy::update(float deltaTime, Entity* player, Map* map, Entity* collidable
     if (GetLength(mMovement) > 1) {
         normaliseMovement();
     }
+    if (mElapsedTime == 0.0f) {
+        mAttackSpeed = 2.0f;
+    }
     mElapsedTime += deltaTime;
     resetColliderFlags();
     mSpeed = mMovePattern(player, this);
@@ -72,33 +75,29 @@ void Enemy::update(float deltaTime, Entity* player, Map* map, Entity* collidable
         // conditional based on mElapsedTime to switch up attacks
         mAttackDelay = 0.0f;
         if (mElapsedTime <= 10.0f) {
-            if (std::sin(mElapsedTime * 100 * 3.14 / 180.0f) >= 0) {
-                // one attack
-                splitAttack(0, 10, fastPattern);
-                delayedAttack(-90, 40, 0.2f, fastPattern);
-            } else {
-                // another attack
-                splitAttack(0, 10, fastPattern);
-                splitAttack(mElapsedTime * 100, 10, wavyPattern);
-                splitAttack(0, 10, homingPattern);
-            }
-        } else if (mElapsedTime <= 30.0f) {
+            delayedAttack(-90, 40, 0.2f, 360.0f / 40, fastPattern);
+            splitAttack(0, 10, fastPattern);
+            splitAttack(mElapsedTime * 100, 10, wavyPattern);
+            splitAttack(0, 10, homingPattern);
+        } else if (mElapsedTime <= 20.0f) {
             mAttackSpeed = 1.3f;
-            splitAttack(mElapsedTime * 5, 30, straightPattern);
-            delayedAttack(0.0f, 1, 0, trackingPattern);
-        } else if (mElapsedTime <= 60.0f) {
+            splitAttack(mElapsedTime * 5, 30, fastPattern);
+            delayedAttack(0.0f, 1, 0, 360.0f / 1.0f, trackingPattern);
+        } else if (mElapsedTime <= 30.0f) {
             mAttackSpeed = 1.0f;
             splitAttack(mElapsedTime * 3, 45, fastPattern);
-            delayedAttack(-90.0f, 10, 0.2f, trackingPattern);
-        } else if (mElapsedTime <= 120.0f) {
+            delayedAttack(-90.0f, 5, 0.2f, 360.0f / 5.0f, trackingPattern);
+        } else if (mElapsedTime <= 40.0f) {
+            delayedAttack(-87.5f, 35, 0.2f, 5.5f, fastPattern);
+        } else {
+            mElapsedTime = 0.0f;
         }
     }
 }
 
-void Enemy::delayedAttack(float initAngle, int attacks, float delay,
+void Enemy::delayedAttack(float initAngle, int attacks, float delay, float step,
                           float (*pattern)(Entity* player, Bullet* bullet)) {
     float angle = initAngle;
-    float step = 360.0f / attacks;
     for (int count = 0; count < attacks; ++count) {
         float nextAngle = angle + count * step;
         Bullet* nextBullet = mInactiveBullets.front();
@@ -107,6 +106,7 @@ void Enemy::delayedAttack(float initAngle, int attacks, float delay,
         nextBullet->setAngle(nextAngle);
         nextBullet->deactivate();
         nextBullet->setDelay(delay * count);
+        nextBullet->setElapsedTime(0.0f);
         nextBullet->setPattern(pattern);
         mBullets.push_back(nextBullet);
         mInactiveBullets.pop();
@@ -123,16 +123,19 @@ void Enemy::splitAttack(float initAngle, int attacks, float (*pattern)(Entity* p
                                  mPosition.y + (5.0f + mScale.y) * std::cos(nextAngle * 3.14f / 180.0f)});
         nextBullet->setAngle(nextAngle);
         nextBullet->setPattern(pattern);
+        nextBullet->setDelay(0.0f);
+        nextBullet->setElapsedTime(0.0f);
+        nextBullet->activate();
         mBullets.push_back(nextBullet);
         mInactiveBullets.pop();
     }
 }
 
 void Enemy::render() {
-    Entity::render();
     for (Bullet* bullet : mBullets) {
         bullet->render();
     }
+    Entity::render();
 }
 
 std::list<Bullet*>& Enemy::getBullets() {
@@ -160,7 +163,7 @@ float wavyPattern(Entity* player, Bullet* bullet) {
 
 float homingPattern(Entity* player, Bullet* bullet) {
     if (bullet->getElapsedTime() > 5.0f) {
-        return 50.0f;
+        return 90.0f;
     }
     float angle = 0.0f;
     Vector2 playerPos = player->getPosition();
@@ -170,7 +173,7 @@ float homingPattern(Entity* player, Bullet* bullet) {
     angle = 180.0f / 3.1415 * atan2f(difference.y, difference.x) - 90.0f;
     angle *= -1.0f;
     bullet->setAngle(angle);
-    return 50.0f;
+    return 30.0f;
 }
 
 void Enemy::setHealth(int newHealth) {
@@ -205,8 +208,12 @@ void Enemy::setElapsedTime(float newElapsedTime) {
 
 void Enemy::clearBullets() {
     while (!mBullets.empty()) {
-        mBullets.front()->deactivate();
-        mInactiveBullets.push(mBullets.front());
+        Bullet* curr = mBullets.front();
+        curr->deactivate();
+        curr->setTimeAlive(35.0f);
+        curr->setElapsedTime(0.0f);
+        curr->setDelay(0.0f);
+        mInactiveBullets.push(curr);
         mBullets.pop_front();
     }
 }
@@ -239,5 +246,5 @@ float trackingPattern(Entity* player, Bullet* bullet) {
     angle = 180.0f / 3.1415 * atan2f(difference.y, difference.x) - 90.0f;
     angle *= -1.0f;
     bullet->setAngle(angle);
-    return 190.0f;
+    return 160.0f;
 }

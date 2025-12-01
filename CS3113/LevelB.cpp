@@ -80,7 +80,7 @@ void LevelB::initialise() {
         mGameState.player->setColliderRadius(mGameState.player->getColliderDimensions().x / 2.0f);
         mGameState.player->setFrameSpeed(6.0f);
 
-        for (int i = 0; i < 2500; ++i) {
+        for (int i = 0; i < 5000; ++i) {
             Bullet* newBullet = new Bullet({mOrigin.x, mOrigin.y - 450.0f},  // position
                                            {20.0f, 20.0f},                   // scale
                                            "./assets/playerBullet.png",      // texture file address
@@ -142,11 +142,12 @@ void LevelB::initialise() {
         for (Enemy* enemy : mGameState.enemies) {
             enemy->setElapsedTime(0.0f);
             enemy->setAttackDelay(0.0f);
-            enemy->setHealth(100);
+            enemy->setHealth(200);
             enemy->activate();
             enemy->clearBullets();
         }
         mGameState.enemies[0]->setMovePattern(eightMovePattern);
+        mGameState.enemies[0]->setPosition({mOrigin.x, mOrigin.y - 400.0f});
     }
 
     /*
@@ -172,11 +173,10 @@ void LevelB::update(float deltaTime) {
 
     int playerHealth = mGameState.player->getHealth();
 
-    mGameState.player->update(deltaTime,          // delta time / fixed timestep
-                              nullptr,            // player
-                              mGameState.map,     // map
-                              mGameState.enemies  // enemies (vector)
-    );
+    mGameState.player->update(deltaTime,       // delta time / fixed timestep
+                              nullptr,         // player
+                              mGameState.map,  // map
+                              nullptr, 0);
 
     if (mGameState.player->getHealth() <= 0 && mGameState.player->isActive()) {
         // play death sound

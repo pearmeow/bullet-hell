@@ -16,7 +16,7 @@ private:
     float mAttackDelay = 0.0f;
     float mAttackSpeed = 2.0f;
     float mElapsedTime = 0.0f;
-    int mHealth = 100;
+    int mHealth = 200;
     int mAttacks = 25;
 
 public:
@@ -28,7 +28,7 @@ public:
                 int collisionCheckCount) override;
     void render();
     void splitAttack(float initAngle, int attacks, float (*pattern)(Entity* player, Bullet* bullet));
-    void delayedAttack(float initAngle, int attacks, float delay,
+    void delayedAttack(float initAngle, int attacks, float delay, float step,
                        float (*pattern)(Entity* player, Bullet* bullet));
     std::list<Bullet*>& getBullets();
     void addBullet(Bullet* bullet);

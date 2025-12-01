@@ -20,7 +20,7 @@ Player::Player(Vector2 position, Vector2 scale, const char* textureFile, Texture
 // unused, just makes linker happy because of virtual
 void Player::update(float deltaTime, Entity* player, Map* map, Entity* collidableEntities,
                     int collisionCheckCount) {
-    printf("Bruh you're not supposed to use this one.\n");
+    // printf("Bruh you're not supposed to use this one.\n");
 }
 
 void Player::update(float deltaTime, Entity* player, Map* map, std::vector<Enemy*>& enemies) {

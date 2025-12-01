@@ -27,6 +27,7 @@ public:
     void setPattern(float (*mPattern)(Entity* player, Bullet* bullet));
     void setDelay(float delay);
     void setTimeAlive(float timeAlive);
+    void setElapsedTime(float elapsedTime);
     float getDelay();
     float getElapsedTime();
 };
