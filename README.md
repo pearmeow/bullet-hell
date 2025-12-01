@@ -11,9 +11,9 @@ Requirement 1: Menu Screen (10%)
 Requirement 2: 2 Minutes of Gameplay (40%)
 ------------------------------------------
 
-- [ ] Must have 2 minutes worth of significant gameplay. This does not mean exactly 2 minutes, but rather that the game can go on for 2+ minutes. 
-- [ ] Your character must be fully animated.
-- [ ] If your idea doesn't revolve around multi-level-based design, whatever scene structure that you implement must contain around the same quantity of content as a 3-level game.
+- [x] Must have 2 minutes worth of significant gameplay. This does not mean exactly 2 minutes, but rather that the game can go on for 2+ minutes. 
+- [x] Your character must be fully animated.
+- [x] If your idea doesn't revolve around multi-level-based design, whatever scene structure that you implement must contain around the same quantity of content as a 3-level game.
 
 Requirement 3: Moving AI (20%)
 ------------------------------
