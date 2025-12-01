@@ -13,6 +13,8 @@ float fastPattern(Entity* player, Bullet* bullet);
 float homingPattern(Entity* player, Bullet* bullet);
 float straightPattern(Entity* player, Bullet* bullet);
 float trackingPattern(Entity* player, Bullet* bullet);
+float rotatingPattern(Entity* player, Bullet* bullet);
+float reverseRotatingPattern(Entity* player, Bullet* bullet);
 
 float stillMovePattern(Entity* player, Enemy* enemy);
 
@@ -91,6 +93,25 @@ void Enemy::update(float deltaTime, Entity* player, Map* map, Entity* collidable
         } else if (mElapsedTime <= 58.0f) {
         } else if (mElapsedTime <= 70.0f) {
             delayedAttack(0, 10, 0.3f, 0, trackingPattern);
+        } else if (mElapsedTime <= 80.0f) {
+            delayedAttack(50.0f, 5, 0.2f, 5.0f, reverseRotatingPattern);
+            delayedAttack(-50.0f, 5, -0.2f, -5.0f, rotatingPattern);
+        } else if (mElapsedTime <= 95.0f) {
+            splitAttack(0, 20, homingPattern);
+        } else if (mElapsedTime <= 90.0f) {
+            splitAttack(0.0f, 9, rotatingPattern);
+        } else if (mElapsedTime <= 100.0f) {
+            splitAttack(0.0f, 9, reverseRotatingPattern);
+        } else if (mElapsedTime <= 120.0f) {
+            splitAttack(0.0f, 9, rotatingPattern);
+            splitAttack(0.0f, 9, reverseRotatingPattern);
+            delayedAttack(-87.5f, 35, 0.2f, 5.5f, fastPattern);
+        } else if (mElapsedTime <= 130.0f) {
+            // better kill him quick
+            mAttackSpeed = 0.2f;
+            delayedAttack(-90, 40, 0.2f, 360.0f / 40, fastPattern);
+            splitAttack(0, 15, wavyPattern);
+            splitAttack(0, 10, homingPattern);
         }
     }
 }
@@ -247,4 +268,16 @@ float trackingPattern(Entity* player, Bullet* bullet) {
     angle *= -1.0f;
     bullet->setAngle(angle);
     return 160.0f;
+}
+
+float rotatingPattern(Entity* player, Bullet* bullet) {
+    float angle = bullet->getAngle();
+    bullet->setAngle(angle + 0.2f);
+    return 90.0f;
+}
+
+float reverseRotatingPattern(Entity* player, Bullet* bullet) {
+    float angle = bullet->getAngle();
+    bullet->setAngle(angle - 0.2f);
+    return 90.0f;
 }
