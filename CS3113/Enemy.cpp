@@ -108,7 +108,7 @@ void Enemy::update(float deltaTime, Entity* player, Map* map, Entity* collidable
             delayedAttack(-87.5f, 35, 0.2f, 5.5f, fastPattern);
         } else if (mElapsedTime <= 140.0f) {
             // better kill him quick
-            mAttackSpeed = 0.2f;
+            mAttackSpeed = 0.5f;
             delayedAttack(-90, 40, 0.2f, 360.0f / 40, fastPattern);
             splitAttack(0, 15, wavyPattern);
             splitAttack(0, 10, homingPattern);

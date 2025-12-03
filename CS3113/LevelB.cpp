@@ -138,11 +138,12 @@ void LevelB::initialise() {
             }
         }
         mGameState.enemies[0]->setMovePattern(eightMovePattern);
+        mGameState.enemies[0]->setHealth(275);
     } else {
         for (Enemy* enemy : mGameState.enemies) {
             enemy->setElapsedTime(0.0f);
             enemy->setAttackDelay(0.0f);
-            enemy->setHealth(300);
+            enemy->setHealth(275);
             enemy->activate();
             enemy->clearBullets();
         }
