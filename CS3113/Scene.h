@@ -11,6 +11,8 @@ struct GameState {
     Sound playerHitSound;
     Sound enemyDeathSound;
     Sound playerDeathSound;
+    Texture2D enemyHealthBar;
+    Texture2D enemyHealthBarBackground;
 
     std::vector<Enemy*> enemies;
     Camera2D camera;

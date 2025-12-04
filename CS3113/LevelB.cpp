@@ -34,6 +34,9 @@ void LevelB::initialise() {
     mGameState.enemyDeathSound = LoadSound("./assets/Multi Explosion.mp3");
     SetSoundVolume(mGameState.enemyDeathSound, 0.8f);
 
+    mGameState.enemyHealthBar = LoadTexture("./assets/greenBox.png");
+    mGameState.enemyHealthBarBackground = LoadTexture("./assets/redBox.png");
+
     /*
        ----------- MAP -----------
     */
@@ -229,6 +232,15 @@ void LevelB::render() {
     for (Enemy* enemy : mGameState.enemies) {
         enemy->render();
     }
+
+    DrawTexturePro(mGameState.enemyHealthBarBackground,
+                   {0.0f, 0.0f, (float)mGameState.enemyHealthBarBackground.width,
+                    (float)mGameState.enemyHealthBarBackground.height},
+                   {0.0f, 0.0f, 100.0f, 10.0f}, {0.0f, 0.0f}, 0.0f, WHITE);
+    DrawTexturePro(mGameState.enemyHealthBar,
+                   {0.0f, 0.0f, (float)mGameState.enemyHealthBar.width, (float)mGameState.enemyHealthBar.height},
+                   {0.0f, 0.0f, mGameState.enemies[0]->getHealth() / 275.0f * 100.0f, 10.0f}, {0.0f, 0.0f}, 0.0f,
+                   WHITE);
 }
 
 void LevelB::shutdown() {
