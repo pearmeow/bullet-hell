@@ -104,6 +104,12 @@ void processInput() {
         }
     }
 
+    if (IsKeyPressed(KEY_P)) {
+        if (gCurrentScene->getState().player != nullptr) {
+            gCurrentScene->getState().player->togglePause();
+        }
+    }
+
     if (IsKeyPressed(KEY_ENTER)) {
         if (gSceneIndex == 0 || gSceneIndex == 3) {
             gSceneIndex = (gSceneIndex + 1) % gLevels.size();

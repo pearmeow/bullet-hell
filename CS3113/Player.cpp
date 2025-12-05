@@ -266,3 +266,11 @@ void Player::setBombing(bool isBombing) {
 void Player::setBombs(int bombs) {
     mBombs = bombs;
 }
+
+void Player::togglePause() {
+    pause = !pause;
+}
+
+bool Player::isPaused() {
+    return pause;
+}

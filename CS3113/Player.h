@@ -16,6 +16,7 @@ private:
     Entity* mHitbox = nullptr;
     std::list<Bullet*> mBullets;
     std::queue<Bullet*> mInactiveBullets;
+    bool pause = false;
 
 public:
     Player(Vector2 position, Vector2 scale, const char* textureFile, TextureType textureType,
@@ -43,6 +44,8 @@ public:
                        int collisionCheckCount);
     int getHealth() const;
     void setHealth(int newHealth);
+    void togglePause();
+    bool isPaused();
 };
 
 #endif

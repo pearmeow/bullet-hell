@@ -166,6 +166,7 @@ void LevelB::initialise() {
 
 void LevelB::update(float deltaTime) {
     UpdateMusicStream(mGameState.bgm);
+    if (mGameState.player->isPaused()) return;
 
     if (mGameState.player->isBombing()) {
         for (Enemy* enemy : mGameState.enemies) {
