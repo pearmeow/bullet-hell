@@ -86,7 +86,6 @@ void LevelA::initialise() {
 }
 
 void LevelA::update(float deltaTime) {
-    UpdateMusicStream(mGameState.bgm);
     if (mGameState.player->isPaused()) return;
 
     if (mGameState.player->isBombing()) {
