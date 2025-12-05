@@ -83,7 +83,7 @@ void LevelB::initialise() {
         mGameState.player->setColliderRadius(mGameState.player->getColliderDimensions().x / 2.0f);
         mGameState.player->setFrameSpeed(6.0f);
 
-        for (int i = 0; i < 5000; ++i) {
+        for (int i = 0; i < 1000; ++i) {
             Bullet* newBullet = new Bullet({mOrigin.x, mOrigin.y - 450.0f},  // position
                                            {20.0f, 20.0f},                   // scale
                                            "./assets/playerBullet.png",      // texture file address
@@ -128,7 +128,7 @@ void LevelB::initialise() {
                                                ));
         for (Enemy* enemy : mGameState.enemies) {
             enemy->setColliderRadius(25.0f);
-            for (int i = 0; i < 2500; ++i) {
+            for (int i = 0; i < 5000; ++i) {
                 Bullet* newBullet = new Bullet({mOrigin.x, mOrigin.y - 450.0f},  // position
                                                {50.0f, 50.0f},                   // scale
                                                "./assets/bullet.png",            // texture file address

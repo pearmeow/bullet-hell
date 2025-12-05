@@ -53,7 +53,7 @@ void LevelA::initialise() {
         mGameState.player->setColliderRadius(mGameState.player->getColliderDimensions().x / 2.0f);
         mGameState.player->setFrameSpeed(6.0f);
 
-        for (int i = 0; i < 5000; ++i) {
+        for (int i = 0; i < 1000; ++i) {
             Bullet* newBullet = new Bullet({mOrigin.x, mOrigin.y - 450.0f},  // position
                                            {20.0f, 20.0f},                   // scale
                                            "./assets/playerBullet.png",      // texture file address
