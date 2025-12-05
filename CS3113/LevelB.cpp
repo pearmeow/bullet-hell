@@ -22,7 +22,7 @@ void LevelB::initialise() {
     mGameState.nextSceneID = 0;
 
     mGameState.bgm = LoadMusicStream("./assets/dova_Mauve Rhopalocera_master.mp3");
-    SetMusicVolume(mGameState.bgm, 0.25f);
+    SetMusicVolume(mGameState.bgm, 0.20f);
     PlayMusicStream(mGameState.bgm);
 
     mGameState.playerHitSound = LoadSound("./assets/synthetic_explosion_1.mp3");
